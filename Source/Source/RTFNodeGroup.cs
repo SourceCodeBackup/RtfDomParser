@@ -162,13 +162,13 @@ namespace XDesigner.RTF
 					if( node.Keyword == "emdash")
 					{
 						AddString( myStr , buffer );
-						myStr.Append( '¡ª');
+						myStr.Append( "¡ª"); // TODO: Check this literal
 						continue ;
 					}
 					if( node.Keyword == "" )
 					{
 						AddString( myStr , buffer );
-						myStr.Append( '¨C' );
+						myStr.Append( "¨C" ); // TODO: Check this literal
 						continue ;
 					}
 				}
