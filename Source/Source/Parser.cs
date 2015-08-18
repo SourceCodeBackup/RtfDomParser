@@ -142,7 +142,7 @@ namespace DCSoft.RTF
             if ( token.Key == "emdash")
             {
                 CheckBuffer();
-                myStr.Append('¡ª');
+                myStr.Append("¡ª"); // TODO: Check this literal
                 return true;
             }
             if ( token.Key == "")

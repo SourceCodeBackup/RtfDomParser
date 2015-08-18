@@ -173,16 +173,16 @@ namespace DCSoft.RTF
 						AddString( myStr , buffer );
 						// notice!! This code may cause compiler error in OS which not support chinese character.
 						// you can change to myStr.Append('-');
-						myStr.Append( '¡ª');
-						continue ;
+						myStr.Append( "¡ª"); // TODO: Check this literal
+                        continue ;
 					}
 					if( node.Keyword == "" )
 					{
 						AddString( myStr , buffer );
 						// notice!! This code may cause compiler error in OS which not support chinese character.
 						// you can change to myStr.Append('-');
-						myStr.Append( '¨C' );
-						continue ;
+						myStr.Append( "¨C" ); // TODO: Check this literal
+                        continue ;
 					}
 				}
 				AddString( myStr , buffer );
