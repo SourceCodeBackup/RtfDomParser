@@ -409,7 +409,7 @@
     <value>0, 0</value>
   </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>DCSoft.RTF V1.0</value>
+    <value>RtfDomParser V1.0</value>
   </data>
   <data name="&gt;&gt;tabPage1.Parent" xml:space="preserve">
     <value>tabControl1</value>

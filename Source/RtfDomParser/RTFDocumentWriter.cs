@@ -14,7 +14,7 @@ using System.Collections ;
 //using DCSoft.Drawing ;
 //using DCSoft.Printing ;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
 	
 	/// <summary>

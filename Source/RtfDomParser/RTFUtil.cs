@@ -15,7 +15,7 @@ using System.Drawing ;
 using System.Drawing.Imaging ;
 using System.Text ;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
 	/// <summary>
     /// some utility functions , this source code evolution from other software.

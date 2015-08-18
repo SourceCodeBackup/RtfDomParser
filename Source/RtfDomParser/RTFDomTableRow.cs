@@ -14,7 +14,7 @@ using System.Text;
 using System.ComponentModel;
 using System.Collections;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
     /// <summary>
     /// table row

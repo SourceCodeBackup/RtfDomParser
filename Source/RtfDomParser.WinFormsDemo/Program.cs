@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace DCSoft.RTF.Test
+namespace RtfDomParser.Test
 {
     static class Program
     {

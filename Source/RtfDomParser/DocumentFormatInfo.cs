@@ -12,7 +12,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
     /// <summary>
     /// RTF Document format information
@@ -923,7 +923,7 @@ namespace DCSoft.RTF
 //using System;
 //using System.ComponentModel ;
 
-//namespace DCSoft.RTF
+//namespace RtfDomParser
 //{
 //    /// <summary>
 //    /// RTF Document format information

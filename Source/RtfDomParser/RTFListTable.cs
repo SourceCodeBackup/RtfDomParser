@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
     public class RTFListTable : List<RTFList>
     {

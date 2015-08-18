@@ -11,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
     /// <summary>
     /// 内嵌对象

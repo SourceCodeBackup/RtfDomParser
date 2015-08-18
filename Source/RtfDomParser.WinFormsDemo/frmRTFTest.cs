@@ -13,9 +13,9 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
-using DCSoft.RTF;
+using RtfDomParser;
 
-namespace DCSoft.RTF.Test
+namespace RtfDomParser.Test
 {
     public partial class frmRTFTest : Form
     {
@@ -33,7 +33,7 @@ namespace DCSoft.RTF.Test
                 if (dlg.ShowDialog(this) == DialogResult.OK)
                 {
                     this.Update();
-                    DCSoft.RTF.RTFDomDocument doc = new DCSoft.RTF.RTFDomDocument();
+                    RtfDomParser.RTFDomDocument doc = new RtfDomParser.RTFDomDocument();
                     doc.Progress += new ProgressEventHandler(doc_Progress);
                     doc.Load(dlg.FileName);
                     txtRTFDom.Text = doc.ToDomString();

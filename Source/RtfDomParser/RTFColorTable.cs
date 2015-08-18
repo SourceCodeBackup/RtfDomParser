@@ -12,7 +12,7 @@
 using System;
 using System.Collections ;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
 	/// <summary>
 	/// rtf color table

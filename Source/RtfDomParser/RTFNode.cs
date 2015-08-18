@@ -11,7 +11,7 @@
 
 using System;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
 	/// <summary>
     /// RTF parser node, this source code evolution from other software.

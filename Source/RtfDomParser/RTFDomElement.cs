@@ -13,7 +13,7 @@ using System.Text;
 using System.Collections;
 using System.ComponentModel;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
     /// <summary>
     /// RTF dom element

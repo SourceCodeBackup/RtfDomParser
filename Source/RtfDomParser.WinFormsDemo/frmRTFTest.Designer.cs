@@ -1,4 +1,4 @@
-﻿namespace DCSoft.RTF.Test
+﻿namespace RtfDomParser.Test
 {
     partial class frmRTFTest
     {

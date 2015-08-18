@@ -15,7 +15,7 @@ using System.Collections.Generic;
 using System.Drawing ;
 using System.Drawing.Drawing2D ;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
     /// <summary>
     /// RTF Document

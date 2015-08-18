@@ -13,7 +13,7 @@ using System;
 using System.Text;
 using System.ComponentModel ;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
     /// <summary>
     /// shape element

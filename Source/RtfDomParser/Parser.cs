@@ -10,7 +10,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
     /// <summary>
     /// RTF plain text container

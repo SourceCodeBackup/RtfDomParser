@@ -10,7 +10,7 @@
 using System;
 using System.Text;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
     /// <summary>
     /// string attribute

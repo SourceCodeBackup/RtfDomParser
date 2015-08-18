@@ -10,7 +10,7 @@
 
 using System;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
 	/// <summary>
 	/// Document information

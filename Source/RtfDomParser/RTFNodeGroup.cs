@@ -9,7 +9,7 @@
 
 using System;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
 	/// <summary>
     /// RTF node group , this source code evolution from other software.

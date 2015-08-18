@@ -9,7 +9,7 @@
 
 using System;
 
-namespace DCSoft.RTF
+namespace RtfDomParser
 {
 	/// <summary>
 	/// Define some rtf key word
