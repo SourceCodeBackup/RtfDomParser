@@ -1,4 +1,4 @@
-/*
+﻿/*
  * 
  *   DCSoft RTF DOM v1.0
  *   Author : Yuan yong fu.
@@ -7,46 +7,39 @@
  * 
  */
 
-
-
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace DCSoft.RTF
 {
     /// <summary>
-    /// table column
+    /// 强制分页符
     /// </summary>
     [Serializable()]
-    public class RTFDomTableColumn : RTFDomElement
+    public class RTFDomPageBreak:RTFDomElement
     {
         /// <summary>
-        /// initialize instance
+        /// 初始化对象
         /// </summary>
-        public RTFDomTableColumn()
+        public RTFDomPageBreak()
         {
+            //对象不能有子元素
+            this.Locked = true;
         }
 
-        private int intWidth = 0;
-        /// <summary>
-        /// width
-        /// </summary>
-        [System.ComponentModel.DefaultValue( 0 )]
-        public int Width
+        public override string InnerText
         {
             get
             {
-                return intWidth; 
-            }
-            set
-            {
-                intWidth = value; 
+                return "";
             }
         }
-
         public override string ToString()
         {
-            return "Column";
+            return "page";
         }
     }
+
+
 }

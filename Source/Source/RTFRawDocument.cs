@@ -1,6 +1,15 @@
+/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
+
 using System;
 
-namespace XDesigner.RTF
+namespace DCSoft.RTF
 {
 	/// <summary>
     /// RTF raw document,this source code evolution from other software.

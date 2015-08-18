@@ -1,29 +1,16 @@
-/***************************************************************************
-
-  Rtf Dom Parser
-
-  Copyright (c) 2010 sinosoft , written by yuans.
-  http://www.sinoreport.net
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-****************************************************************************/
+/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
 
 using System;
+using System.Collections.Generic;
 
-namespace XDesigner.RTF
+namespace DCSoft.RTF
 {
     /// <summary>
     /// RTF plain text container
@@ -39,7 +26,6 @@ namespace XDesigner.RTF
             myDocument = doc;
         }
 
-        private System.Text.StringBuilder myStr = new System.Text.StringBuilder();
         private ByteBuffer myBuffer = new ByteBuffer();
 
         private RTFDomDocument myDocument = null;
@@ -52,17 +38,79 @@ namespace XDesigner.RTF
             set { myDocument = value; }
         }
 
+        private System.Text.StringBuilder myStr = new System.Text.StringBuilder();
+        /// <summary>
+        /// Append text content
+        /// </summary>
+        /// <param name="text"></param>
+        public void Append(string text)
+        {
+            if (string.IsNullOrEmpty(text) == false)
+            {
+                CheckBuffer();
+                myStr.Append(text);
+            }
+        }
+
         /// <summary>
         /// Accept rtf token
         /// </summary>
         /// <param name="token">RTF token</param>
         /// <returns>Is accept it?</returns>
-        public bool Accept(RTFToken token)
+        public bool Accept(RTFToken token , RTFReader reader )
         {
             if (token == null)
+            {
                 return false;
+            }
             if (token.Type == RTFTokenType.Text)
             {
+                if (reader != null)
+                {
+                    if ( token.Key[0] == '?' )
+                    {
+                        if (reader.LastToken != null)
+                        {
+                            if (reader.LastToken.Type == RTFTokenType.Keyword 
+                                && reader.LastToken.Key == "u"
+                                && reader.LastToken.HasParam)
+                            {
+                                // 紧跟在在“\uN”后面的问号忽略掉
+                                if (token.Key.Length > 0)
+                                {
+                                    CheckBuffer();
+                                    //myStr.Append(token.Key.Substring(1));
+                                }
+                                return true;
+                            }
+                        }
+                    }
+                    //else if (token.Key == "\"")
+                    //{
+                    //    // 双引号开头,一直读取内容到双引号结束
+                    //    CheckBuffer();
+                    //    while (true)
+                    //    {
+                    //        int v = reader.InnerReader.Read();
+                    //        if (v > 0)
+                    //        {
+                    //            if (v == (int)'"')
+                    //            {
+                    //                break;
+                    //            }
+                    //            else
+                    //            {
+                    //                myStr.Append((char)v);
+                    //            }
+                    //        }
+                    //        else
+                    //        {
+                    //            break;
+                    //        }
+                    //    }//while
+                    //    return true;
+                    //}
+                }
                 CheckBuffer();
                 myStr.Append(token.Key);
                 return true ;
@@ -70,7 +118,19 @@ namespace XDesigner.RTF
             else if (token.Type == RTFTokenType.Control 
                 && token.Key == "'" && token.HasParam )
             {
-                myBuffer.Add((byte)token.Param);
+                if( reader.CurrentLayerInfo.CheckUCValueCount())
+                {
+                    myBuffer.Add((byte)token.Param);
+                }
+                return true;
+            }
+            if (token.Key == RTFConsts._u && token.HasParam)
+            {
+                // Unicode char
+                CheckBuffer();
+                // 不忽略 \u 指令
+                myStr.Append( (char)token.Param);
+                reader.CurrentLayerInfo.UCValueCount = reader.CurrentLayerInfo.UCValue;
                 return true;
             }
             if ( token.Key == "tab")
@@ -82,11 +142,12 @@ namespace XDesigner.RTF
             if ( token.Key == "emdash")
             {
                 CheckBuffer();
-                myStr.Append("—"); // TODO: Check this literal
+                myStr.Append('—');
                 return true;
             }
             if ( token.Key == "")
             {
+                // 提示未识别的字符
                 CheckBuffer();
                 myStr.Append('-');
                 return true;
@@ -174,7 +235,12 @@ namespace XDesigner.RTF
 		private RTFLex myLex = null;
 		//private RTFToken myToken = null ;
 
-		private System.IO.TextReader myReader = null;
+        private System.IO.TextReader myReader = null;
+
+        public System.IO.TextReader InnerReader
+        {
+            get { return myReader; }
+        }
 
         //private System.Collections.ArrayList myTokenStack = new System.Collections.ArrayList();
         //public System.Collections.ArrayList TokenStack
@@ -401,6 +467,38 @@ namespace XDesigner.RTF
             }
         }
 
+        private bool _EnableDefaultProcess = true;
+
+        public bool EnableDefaultProcess
+        {
+            get { return _EnableDefaultProcess; }
+            set { _EnableDefaultProcess = value; }
+        }
+
+        public void DefaultProcess()
+        {
+            if (this.CurrentToken != null)
+            {
+                switch (this.CurrentToken.Key)
+                {
+                    case "uc":
+                        this.CurrentLayerInfo.UCValue = this.Parameter;
+                        break;
+                }
+            }
+        }
+        private Stack<RTFRawLayerInfo> _LayerStack = new Stack<RTFRawLayerInfo>();
+        public RTFRawLayerInfo CurrentLayerInfo
+        {
+            get
+            {
+                if (_LayerStack.Count == 0)
+                {
+                    _LayerStack.Push(new RTFRawLayerInfo());
+                }
+                return _LayerStack.Peek();
+            }
+        }
 		/// <summary>
 		/// read token
 		/// </summary>
@@ -422,13 +520,29 @@ namespace XDesigner.RTF
             intTokenCount++;
             if (myCurrentToken.Type == RTFTokenType.GroupStart)
             {
+                if (_LayerStack.Count == 0)
+                {
+                    _LayerStack.Push(new RTFRawLayerInfo());
+                }
+                else
+                {
+                    RTFRawLayerInfo info = _LayerStack.Peek();
+                    _LayerStack.Push(info.Clone());
+                }
                 intLevel++;
             }
             else if (myCurrentToken.Type == RTFTokenType.GroupEnd)
             {
+                if (_LayerStack.Count > 0)
+                {
+                    _LayerStack.Pop();
+                }
                 intLevel--;
             }
-   
+            if (this.EnableDefaultProcess)
+            {
+                this.DefaultProcess();
+            }
             //if (myTokenStack.Count > 0)
             //{
             //    myCurrentToken.Parent = (RTFToken)myTokenStack[myTokenStack.Count - 1];
@@ -536,6 +650,32 @@ namespace XDesigner.RTF
 			//myReader.Read();
 
 			c = myReader.Read();
+            if (c == '\"')
+            {
+                // 以双引号开头，读取连续的字符
+                System.Text.StringBuilder str = new System.Text.StringBuilder();
+                while (true)
+                {
+                    c = myReader.Read();
+                    if (c < 0)
+                    {
+                        // 读取结束
+                        break;
+                    }
+                    if (c == '\"')
+                    {
+                        // 读取结束
+                        break;
+                    }
+                    else
+                    {
+                        str.Append((char)c);
+                    }
+                }//while
+                token.Type = RTFTokenType.Text;
+                token.Key = str.ToString();
+                return token;
+            }
 
 			while( c == '\r'
 				|| c == '\n'
@@ -764,6 +904,27 @@ namespace XDesigner.RTF
                     return true;
                 return false;
             }
+        }
+
+        public override string ToString()
+        {
+            if (intType == RTFTokenType.Keyword)
+            {
+                return this.Key + this.Param;
+            }
+            else if (intType == RTFTokenType.GroupStart)
+            {
+                return "{";
+            }
+            else if (intType == RTFTokenType.GroupEnd)
+            {
+                return "}";
+            }
+            else if (intType == RTFTokenType.Text)
+            {
+                return "Text:" + this.Param;
+            }
+            return intType.ToString() + ":" + this.Key + " " + this.Param;
         }
 	}
 

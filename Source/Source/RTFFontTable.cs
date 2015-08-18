@@ -1,28 +1,19 @@
-/***************************************************************************
+/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
 
-  Rtf Dom Parser
 
-  Copyright (c) 2010 sinosoft , written by yuans.
-  http://www.sinoreport.net
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-****************************************************************************/
 using System;
 using System.Collections ;
-namespace XDesigner.RTF
+using System.Collections.Generic ;
+using System.Text ;
+
+namespace DCSoft.RTF
 {
     
 
@@ -71,7 +62,9 @@ namespace XDesigner.RTF
                 foreach (RTFFont item in this)
                 {
                     if (item.Name == fontName)
+                    {
                         return item;
+                    }
                 }
                 return null;
             }
@@ -86,31 +79,52 @@ namespace XDesigner.RTF
         {
             RTFFont font = this[fontIndex];
             if (font != null)
-                return font.Name ;
+            {
+                return font.Name;
+            }
             else
+            {
                 return null;
-        }
+            }
+        } 
 
 		/// <summary>
 		/// add font
 		/// </summary>
 		/// <param name="f">font name</param>
-		public void Add( string f )
+		public RTFFont Add( string f )
 		{
-            if ( this[f] == null)
-            {
-                this.List.Add(new RTFFont(this.Count, f));
-            }
+            return Add(this.Count, f, Encoding.Default);
 		}
+
+        /// <summary>
+        /// add font
+        /// </summary>
+        /// <param name="f">font name</param>
+        public RTFFont Add(string f , Encoding encoding )
+        {
+            return Add(this.Count, f, encoding);
+        }
+
 		/// <summary>
 		/// add font
 		/// </summary>
 		/// <param name="index">special font index</param>
 		/// <param name="f">font name</param>
-		public void Add( int index , string f )
-		{
-            this.List.Add(new RTFFont(index, f));
-		}
+        public RTFFont Add(int index, string f, Encoding encoding)
+        {
+            if (this[f] == null)
+            {
+                RTFFont font = new RTFFont(index, f);
+                if (encoding != null)
+                {
+                    font.Charset = RTFFont.GetCharset(encoding);
+                }
+                this.List.Add(font);
+                return font ;
+            }
+            return this[f];
+        }
 
         public void Add(RTFFont f)
         {
@@ -226,6 +240,14 @@ namespace XDesigner.RTF
             }
         }
 
+        private bool _NilFlag = false;
+
+        public bool NilFlag
+        {
+            get { return _NilFlag; }
+            set { _NilFlag = value; }
+        }
+
         private string strName = null;
         /// <summary>
         /// font name
@@ -242,7 +264,7 @@ namespace XDesigner.RTF
             }
         }
 
-        private int intCharset = 0;
+        private int intCharset = 1;
         /// <summary>
         /// charset 
         /// </summary>
@@ -259,74 +281,139 @@ namespace XDesigner.RTF
             }
         }
 
+        private static Dictionary<int, Encoding> _EncodingCharsets = null;
+        private static void CheckEncodingCharsets()
+        {
+            if (_EncodingCharsets == null)
+            {
+                _EncodingCharsets = new Dictionary<int, Encoding>();
+                //_EncodingCharsets[0] = ANSIEncoding.Instance;
+                //_EncodingCharsets[1] = Encoding.Default;
+                _EncodingCharsets[77] = Encoding.GetEncoding(10000);//Mac ,macintosh Î÷Å·×Ö·û(Mac)
+                _EncodingCharsets[128] = Encoding.GetEncoding(932);//Shift Jis ;ANSI/OEM - Japanese, Shift-JIS 
+                _EncodingCharsets[130] = Encoding.GetEncoding(1361);//Johab;Korean (Johab) 
+                _EncodingCharsets[134] = Encoding.GetEncoding(936);//GB2312
+                _EncodingCharsets[136] = Encoding.GetEncoding(10002);//Big5
+                _EncodingCharsets[161] = Encoding.GetEncoding(1253);//Greek
+                _EncodingCharsets[162] = Encoding.GetEncoding(1254);//Turkish
+                _EncodingCharsets[163] = Encoding.GetEncoding(1258);//Vietnamese;ANSI/OEM - Vietnamese 
+                _EncodingCharsets[177] = Encoding.GetEncoding(1255);//Hebrw
+                _EncodingCharsets[178] = Encoding.GetEncoding(864);//Arabic
+                _EncodingCharsets[179] = Encoding.GetEncoding(864);//Arabic Traditional
+                _EncodingCharsets[180] = Encoding.GetEncoding(864);//Arabic user
+                _EncodingCharsets[181] = Encoding.GetEncoding(864);//Hebrew user
+                _EncodingCharsets[186] = Encoding.GetEncoding(775);//Baltic
+                _EncodingCharsets[204] = Encoding.GetEncoding(866);//Russian
+                _EncodingCharsets[222] = Encoding.GetEncoding(874);//Thai
+                _EncodingCharsets[255] = Encoding.GetEncoding(437);//OEM
+
+
+
+            }
+        }
+
+        internal static int GetCharset(Encoding encoding)
+        {
+            CheckEncodingCharsets();
+            foreach (int key in _EncodingCharsets.Keys)
+            {
+                if (_EncodingCharsets[key] == encoding)
+                {
+                    return key;
+                }
+            }
+            return 1;
+        }
+
         internal static System.Text.Encoding GetRTFEncoding(int fchartset)
         {
-            switch (fchartset)
+            if (fchartset == 0)
             {
-                case 0: 	// ANSI
-                    return ANSIEncoding.Instance;
-                case 1:	// Default
-                    return System.Text.Encoding.Default;
-                    
-                //case 2:	// Symbol
-                //case 3:	// Invalid
-                case 77:   // Mac
-                    return System.Text.Encoding.GetEncoding(10000); //macintosh Î÷Å·×Ö·û(Mac)
-                    
-                case 128:	// Shift Jis
-                    return System.Text.Encoding.GetEncoding(932);// ANSI/OEM - Japanese, Shift-JIS 
-                    
-                //case 129:	// Hangul
-                case 130:	// Johab
-                    return System.Text.Encoding.GetEncoding(1361);// Korean (Johab) 
-                    
-                case 134:	// GB2312
-                    return System.Text.Encoding.GetEncoding(936);
-                    
-                case 136:	// Big5
-                    return System.Text.Encoding.GetEncoding(10002);// MAC - Traditional Chinese (Big5) 
-                    
-                case 161:	// Greek
-                    return System.Text.Encoding.GetEncoding(1253);// ANSI - Greek 
-                    
-                case 162:	// Turkish
-                    return System.Text.Encoding.GetEncoding(1254);//ANSI - Turkish 
-                    
-                case 163:	// Vietnamese
-                    return System.Text.Encoding.GetEncoding(1258);// ANSI/OEM - Vietnamese 
-                    
-                case 177:	// Hebrew
-                    return System.Text.Encoding.GetEncoding(1255);// ANSI - Hebrew 
-                    
-                case 178:	// Arabic
-                    return System.Text.Encoding.GetEncoding(864);//OEM - Arabic 
-                    
-                case 179:	// Arabic Traditional
-                    return System.Text.Encoding.GetEncoding(864);//OEM - Arabic 
-                    
-                case 180:	// Arabic user
-                    return System.Text.Encoding.GetEncoding(864);//OEM - Arabic 
-                    
-                case 181:	// Hebrew user
-                    return System.Text.Encoding.GetEncoding(864);//OEM - Arabic 
-                    
-                case 186:	// Baltic
-                    return System.Text.Encoding.GetEncoding(775);//OEM - Baltic 
-                    
-                case 204:	// Russian
-                    return System.Text.Encoding.GetEncoding(866);//OEM - Russian 
-                    
-                case 222:	// Thai
-                    return System.Text.Encoding.GetEncoding(874);//ANSI/OEM - Thai (same as 28605, ISO 8859-15) 
-                    
-                //case 238:	// Eastern European
-                //case 254:	// PC 437
-                case 255:	// OEM
-                    return System.Text.Encoding.GetEncoding(437);//OEM - United States 
-                    
-                default:
-                    return null;
+                return ANSIEncoding.Instance;
             }
+            else if (fchartset == 1)
+            {
+                return Encoding.Default;
+            }
+            else
+            {
+                CheckEncodingCharsets();
+                if (_EncodingCharsets.ContainsKey(fchartset))
+                {
+                    return _EncodingCharsets[fchartset];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            //switch (fchartset)
+            //{
+            //    case 0: 	// ANSI
+            //        return ANSIEncoding.Instance;
+            //    case 1:	// Default
+            //        return System.Text.Encoding.Default;
+                    
+            //    //case 2:	// Symbol
+            //    //case 3:	// Invalid
+            //    case 77:   // Mac
+            //        return System.Text.Encoding.GetEncoding(10000); //macintosh Î÷Å·×Ö·û(Mac)
+                    
+            //    case 128:	// Shift Jis
+            //        return System.Text.Encoding.GetEncoding(932);// ANSI/OEM - Japanese, Shift-JIS 
+                    
+            //    //case 129:	// Hangul
+            //    case 130:	// Johab
+            //        return System.Text.Encoding.GetEncoding(1361);// Korean (Johab) 
+                    
+            //    case 134:	// GB2312
+            //        return System.Text.Encoding.GetEncoding(936);
+                    
+            //    case 136:	// Big5
+            //        return System.Text.Encoding.GetEncoding(10002);// MAC - Traditional Chinese (Big5) 
+                    
+            //    case 161:	// Greek
+            //        return System.Text.Encoding.GetEncoding(1253);// ANSI - Greek 
+                    
+            //    case 162:	// Turkish
+            //        return System.Text.Encoding.GetEncoding(1254);//ANSI - Turkish 
+                    
+            //    case 163:	// Vietnamese
+            //        return System.Text.Encoding.GetEncoding(1258);// ANSI/OEM - Vietnamese 
+                    
+            //    case 177:	// Hebrew
+            //        return System.Text.Encoding.GetEncoding(1255);// ANSI - Hebrew 
+                    
+            //    case 178:	// Arabic
+            //        return System.Text.Encoding.GetEncoding(864);//OEM - Arabic 
+                    
+            //    case 179:	// Arabic Traditional
+            //        return System.Text.Encoding.GetEncoding(864);//OEM - Arabic 
+                    
+            //    case 180:	// Arabic user
+            //        return System.Text.Encoding.GetEncoding(864);//OEM - Arabic 
+                    
+            //    case 181:	// Hebrew user
+            //        return System.Text.Encoding.GetEncoding(864);//OEM - Arabic 
+                    
+            //    case 186:	// Baltic
+            //        return System.Text.Encoding.GetEncoding(775);//OEM - Baltic 
+                    
+            //    case 204:	// Russian
+            //        return System.Text.Encoding.GetEncoding(866);//OEM - Russian 
+                    
+            //    case 222:	// Thai
+            //        return System.Text.Encoding.GetEncoding(874);//ANSI/OEM - Thai (same as 28605, ISO 8859-15) 
+                    
+            //    //case 238:	// Eastern European
+            //    //case 254:	// PC 437
+            //    case 255:	// OEM
+            //        return System.Text.Encoding.GetEncoding(437);//OEM - United States 
+                    
+            //    default:
+            //        return null;
+            //}
         }
 
         private System.Text.Encoding myEncoding = null ;

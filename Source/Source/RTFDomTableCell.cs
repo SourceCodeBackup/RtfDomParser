@@ -1,30 +1,18 @@
-/***************************************************************************
+/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
 
-  Rtf Dom Parser
 
-  Copyright (c) 2010 sinosoft , written by yuans.
-  http://www.sinoreport.net
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-****************************************************************************/
 
 using System;
 using System.Text;
 
-namespace XDesigner.RTF
+namespace DCSoft.RTF
 {
     /// <summary>
     /// cell 
@@ -37,6 +25,7 @@ namespace XDesigner.RTF
         /// </summary>
         public RTFDomTableCell()
         {
+            myFormat.BorderWidth = 1;
         }
 
         private int intRowSpan = 1;
@@ -241,63 +230,63 @@ namespace XDesigner.RTF
             }
         }
 
-        private bool bolLeftBorder = false;
-        [System.ComponentModel.DefaultValue(false)]
-        public bool LeftBorder
-        {
-            get
-            {
-                return bolLeftBorder;
-            }
-            set
-            {
-                bolLeftBorder = value;
-            }
-        }
+        //private bool bolLeftBorder = false;
+        //[System.ComponentModel.DefaultValue(false)]
+        //public bool LeftBorder
+        //{
+        //    get
+        //    {
+        //        return bolLeftBorder;
+        //    }
+        //    set
+        //    {
+        //        bolLeftBorder = value;
+        //    }
+        //}
 
-        private bool bolTopBorder = false;
-        [System.ComponentModel.DefaultValue(false)]
-        public bool TopBorder
-        {
-            get
-            {
-                return bolTopBorder;
-            }
-            set
-            {
-                bolTopBorder = value;
-            }
-        }
+        //private bool bolTopBorder = false;
+        //[System.ComponentModel.DefaultValue(false)]
+        //public bool TopBorder
+        //{
+        //    get
+        //    {
+        //        return bolTopBorder;
+        //    }
+        //    set
+        //    {
+        //        bolTopBorder = value;
+        //    }
+        //}
 
 
-        private bool bolRightBorder = false;
-        [System.ComponentModel.DefaultValue(false)]
-        public bool RightBorder
-        {
-            get
-            {
-                return bolRightBorder;
-            }
-            set
-            {
-                bolRightBorder = value;
-            }
-        }
+        //private bool bolRightBorder = false;
+        //[System.ComponentModel.DefaultValue(false)]
+        //public bool RightBorder
+        //{
+        //    get
+        //    {
+        //        return bolRightBorder;
+        //    }
+        //    set
+        //    {
+        //        bolRightBorder = value;
+        //    }
+        //}
 
-        private bool bolBottomBorder = false;
+        //private bool bolBottomBorder = false;
 
-        [System.ComponentModel.DefaultValue(false)]
-        public bool BottomBorder
-        {
-            get
-            {
-                return bolBottomBorder;
-            }
-            set
-            {
-                bolBottomBorder = value;
-            }
-        }
+        //[System.ComponentModel.DefaultValue(false)]
+        //public bool BottomBorder
+        //{
+        //    get
+        //    {
+        //        return bolBottomBorder;
+        //    }
+        //    set
+        //    {
+        //        bolBottomBorder = value;
+        //    }
+        //}
 
         private RTFVerticalAlignment intVerticalAlignment = RTFVerticalAlignment.Top;
         /// <summary>
@@ -349,39 +338,39 @@ namespace XDesigner.RTF
             }
         }
 
-        private System.Drawing.Color intBorderColor = System.Drawing.Color.Black;
-        /// <summary>
-        /// border color
-        /// </summary>
-        [System.ComponentModel.DefaultValue(typeof(System.Drawing.Color), "Black")]
-        public System.Drawing.Color BorderColor
-        {
-            get
-            {
-                return intBorderColor;
-            }
-            set
-            {
-                intBorderColor = value;
-            }
-        }
+        //private System.Drawing.Color intBorderColor = System.Drawing.Color.Black;
+        ///// <summary>
+        ///// border color
+        ///// </summary>
+        //[System.ComponentModel.DefaultValue(typeof(System.Drawing.Color), "Black")]
+        //public System.Drawing.Color BorderColor
+        //{
+        //    get
+        //    {
+        //        return intBorderColor;
+        //    }
+        //    set
+        //    {
+        //        intBorderColor = value;
+        //    }
+        //}
 
-        private System.Drawing.Color intBackColor = System.Drawing.Color.Transparent;
-        /// <summary>
-        /// back color
-        /// </summary>
-        [System.ComponentModel.DefaultValue(typeof(System.Drawing.Color), "Transparent")]
-        public System.Drawing.Color BackColor
-        {
-            get
-            {
-                return intBackColor;
-            }
-            set
-            {
-                intBackColor = value;
-            }
-        }
+        //private System.Drawing.Color intBackColor = System.Drawing.Color.Transparent;
+        ///// <summary>
+        ///// back color
+        ///// </summary>
+        //[System.ComponentModel.DefaultValue(typeof(System.Drawing.Color), "Transparent")]
+        //public System.Drawing.Color BackColor
+        //{
+        //    get
+        //    {
+        //        return intBackColor;
+        //    }
+        //    set
+        //    {
+        //        intBackColor = value;
+        //    }
+        //}
          
 
         private int intLeft = 0;
@@ -459,11 +448,11 @@ namespace XDesigner.RTF
             {
                 if (intRowSpan != 1 || intColSpan != 1)
                 {
-                    return "Cell: RowSpan:" + intRowSpan + " ColSpan:" + intColSpan;
+                    return "Cell: RowSpan:" + intRowSpan + " ColSpan:" + intColSpan + " Width:" + this.Width ;
                 }
                 else
                 {
-                    return "Cell";
+                    return "Cell:Width:" + this.Width ;
                 }
             }
             else

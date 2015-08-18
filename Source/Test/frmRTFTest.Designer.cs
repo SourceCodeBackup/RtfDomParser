@@ -1,4 +1,4 @@
-﻿namespace XDesigner.RTF.Test
+﻿namespace DCSoft.RTF.Test
 {
     partial class frmRTFTest
     {
@@ -31,81 +31,148 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRTFTest));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.btnLoadRTF = new System.Windows.Forms.ToolStripButton();
+            this.btnLoadClipboardRTF = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.myProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.txtRTFDom = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.txtRTFSource = new System.Windows.Forms.TextBox();
+            this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.btnLoadFile = new System.Windows.Forms.ToolStripButton();
+            this.btnCopyText = new System.Windows.Forms.ToolStripButton();
+            this.btnCopyRTF = new System.Windows.Forms.ToolStripButton();
             this.toolStrip1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
+            this.toolStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
             // 
+            resources.ApplyResources(this.toolStrip1, "toolStrip1");
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.btnLoadRTF,
+            this.btnLoadClipboardRTF,
             this.toolStripSeparator1,
             this.myProgress});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 70);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(667, 25);
-            this.toolStrip1.TabIndex = 0;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStrip1.ShowItemToolTips = false;
             // 
             // btnLoadRTF
             // 
-            this.btnLoadRTF.Image = ((System.Drawing.Image)(resources.GetObject("btnLoadRTF.Image")));
-            this.btnLoadRTF.ImageTransparentColor = System.Drawing.Color.Magenta;
+            resources.ApplyResources(this.btnLoadRTF, "btnLoadRTF");
             this.btnLoadRTF.Name = "btnLoadRTF";
-            this.btnLoadRTF.Size = new System.Drawing.Size(121, 22);
-            this.btnLoadRTF.Text = "Load RTF file...";
             this.btnLoadRTF.Click += new System.EventHandler(this.btnLoadRTF_Click);
+            // 
+            // btnLoadClipboardRTF
+            // 
+            resources.ApplyResources(this.btnLoadClipboardRTF, "btnLoadClipboardRTF");
+            this.btnLoadClipboardRTF.Name = "btnLoadClipboardRTF";
+            this.btnLoadClipboardRTF.Click += new System.EventHandler(this.btnLoadClipboardRTF_Click);
             // 
             // toolStripSeparator1
             // 
+            resources.ApplyResources(this.toolStripSeparator1, "toolStripSeparator1");
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
             // 
             // myProgress
             // 
+            resources.ApplyResources(this.myProgress, "myProgress");
             this.myProgress.Name = "myProgress";
-            this.myProgress.Size = new System.Drawing.Size(200, 22);
             // 
             // txtRTFDom
             // 
-            this.txtRTFDom.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtRTFDom.Location = new System.Drawing.Point(0, 95);
-            this.txtRTFDom.Multiline = true;
+            resources.ApplyResources(this.txtRTFDom, "txtRTFDom");
             this.txtRTFDom.Name = "txtRTFDom";
-            this.txtRTFDom.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtRTFDom.Size = new System.Drawing.Size(667, 472);
-            this.txtRTFDom.TabIndex = 1;
-            this.txtRTFDom.WordWrap = false;
             // 
             // label1
             // 
+            resources.ApplyResources(this.label1, "label1");
             this.label1.BackColor = System.Drawing.Color.White;
             this.label1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(667, 70);
-            this.label1.TabIndex = 2;
-            this.label1.Text = resources.GetString("label1.Text");
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // tabControl1
+            // 
+            resources.ApplyResources(this.tabControl1, "tabControl1");
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            // 
+            // tabPage1
+            // 
+            resources.ApplyResources(this.tabPage1, "tabPage1");
+            this.tabPage1.Controls.Add(this.txtRTFDom);
+            this.tabPage1.Controls.Add(this.toolStrip1);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            resources.ApplyResources(this.tabPage2, "tabPage2");
+            this.tabPage2.Controls.Add(this.txtRTFSource);
+            this.tabPage2.Controls.Add(this.toolStrip2);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // txtRTFSource
+            // 
+            resources.ApplyResources(this.txtRTFSource, "txtRTFSource");
+            this.txtRTFSource.Name = "txtRTFSource";
+            // 
+            // toolStrip2
+            // 
+            resources.ApplyResources(this.toolStrip2, "toolStrip2");
+            this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnLoadFile,
+            this.btnCopyText,
+            this.btnCopyRTF});
+            this.toolStrip2.Name = "toolStrip2";
+            this.toolStrip2.ShowItemToolTips = false;
+            // 
+            // btnLoadFile
+            // 
+            resources.ApplyResources(this.btnLoadFile, "btnLoadFile");
+            this.btnLoadFile.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnLoadFile.Name = "btnLoadFile";
+            this.btnLoadFile.Click += new System.EventHandler(this.btnLoadFile_Click);
+            // 
+            // btnCopyText
+            // 
+            resources.ApplyResources(this.btnCopyText, "btnCopyText");
+            this.btnCopyText.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnCopyText.Name = "btnCopyText";
+            this.btnCopyText.Click += new System.EventHandler(this.btnCopyText_Click);
+            // 
+            // btnCopyRTF
+            // 
+            resources.ApplyResources(this.btnCopyRTF, "btnCopyRTF");
+            this.btnCopyRTF.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.btnCopyRTF.Name = "btnCopyRTF";
+            this.btnCopyRTF.Click += new System.EventHandler(this.btnCopyRTF_Click);
             // 
             // frmRTFTest
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            resources.ApplyResources(this, "$this");
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(667, 567);
-            this.Controls.Add(this.txtRTFDom);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.label1);
             this.Name = "frmRTFTest";
-            this.Text = "Rtf Dom Parser V1.0";
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
+            this.toolStrip2.ResumeLayout(false);
+            this.toolStrip2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -117,6 +184,15 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripProgressBar myProgress;
+        private System.Windows.Forms.ToolStripButton btnLoadClipboardRTF;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TextBox txtRTFSource;
+        private System.Windows.Forms.ToolStrip toolStrip2;
+        private System.Windows.Forms.ToolStripButton btnLoadFile;
+        private System.Windows.Forms.ToolStripButton btnCopyText;
+        private System.Windows.Forms.ToolStripButton btnCopyRTF;
     }
 }
 

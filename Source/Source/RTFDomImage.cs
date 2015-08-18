@@ -1,30 +1,18 @@
-/***************************************************************************
+/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
 
-  Rtf Dom Parser
 
-  Copyright (c) 2010 sinosoft , written by yuans.
-  http://www.sinoreport.net
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-****************************************************************************/
 
 using System;
 using System.Text;
 
-namespace XDesigner.RTF
+namespace DCSoft.RTF
 {
     /// <summary>
     /// image element
@@ -201,6 +189,22 @@ namespace XDesigner.RTF
             }
         }
 
+        private RTFPicType _PicType = RTFPicType.Jpegblip;
+        /// <summary>
+        /// Õº∆¨∏Ò Ω
+        /// </summary>
+        public RTFPicType PicType
+        {
+            get
+            {
+                return _PicType; 
+            }
+            set
+            {
+                _PicType = value; 
+            }
+        }
+
         private DocumentFormatInfo myFormat = new DocumentFormatInfo();
         /// <summary>
         /// format
@@ -224,5 +228,43 @@ namespace XDesigner.RTF
                 txt = txt + " " + Convert.ToDouble( bsData.Length / 1024.0).ToString("0.00") + "KB";
             return txt;
         }
+    }
+
+    public enum RTFPicType
+    {
+        /// <summary>
+        /// Source of the picture is an EMF (enhanced metafile).
+        /// </summary>
+        Emfblip ,
+        /// <summary>
+        /// Source of the picture is a PNG.
+        /// </summary>
+        Pngblip ,
+        /// <summary>
+        /// Source of the picture is a JPEG.
+        /// </summary>
+        Jpegblip ,
+        /// <summary>
+        /// ource of the picture is QuickDraw.
+        /// </summary>
+        Macpict ,
+        /// <summary>
+        /// Source of the picture is an OS/2 metafile. The N argument identifies the metafile type. The N values are described in the \pmmetafile table further on in this section.
+        /// </summary>
+        Pmmetafile ,
+        /// <summary>
+        /// Source of the picture is a Windows metafile. The N argument identifies the metafile type (the default type is 1).
+        /// </summary>
+        Wmetafile ,
+        /// <summary>
+        /// Source of the picture is a Windows device-independent bitmap. The N argument identifies the bitmap type, which must equal 0.
+        /// The information to be included in RTF from a Windows device-independent bitmap is the concatenation of the BITMAPINFO structure followed by the actual pixel data.
+        /// </summary>
+        Dibitmap ,
+        /// <summary>
+        /// Source of the picture is a Windows device-dependent bitmap. The N argument identifies the bitmap type (must equal 0).
+        /// The information to be included in RTF from a Windows device-dependent bitmap is the result of the GetBitmapBits function.
+        /// </summary>
+        Wbitmap
     }
 }

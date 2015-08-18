@@ -1,32 +1,20 @@
-/***************************************************************************
+/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
 
-  Rtf Dom Parser
 
-  Copyright (c) 2010 sinosoft , written by yuans.
-  http://www.sinoreport.net
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-****************************************************************************/
 
 using System;
 using System.Collections ;
-//using XDesigner.Drawer ;
-//using XDesigner.Printing ;
+//using DCSoft.Drawing ;
+//using DCSoft.Printing ;
 
-namespace XDesigner.RTF
+namespace DCSoft.RTF
 {
 	
 	/// <summary>
@@ -57,7 +45,9 @@ namespace XDesigner.RTF
 		public RTFDocumentWriter( System.IO.Stream stream )
 		{
             myColorTable.CheckValueExistWhenAdd = true;
-			System.IO.StreamWriter writer = new System.IO.StreamWriter( stream , System.Text.Encoding.ASCII );
+			System.IO.StreamWriter writer = new System.IO.StreamWriter( 
+                stream ,
+                System.Text.Encoding.ASCII );
 			Open( writer );
 		}
 
@@ -117,6 +107,21 @@ namespace XDesigner.RTF
 			}
 		}
 
+        private RTFListTable _ListTable = new RTFListTable();
+
+        public RTFListTable ListTable
+        {
+            get { return _ListTable; }
+            set { _ListTable = value; }
+        }
+
+        private RTFListOverrideTable _ListOverrideTable = new RTFListOverrideTable();
+
+        public RTFListOverrideTable ListOverrideTable
+        {
+            get { return _ListOverrideTable; }
+            set { _ListOverrideTable = value; }
+        }
 		/// <summary>
 		/// rtf color table
 		/// </summary>
@@ -149,6 +154,14 @@ namespace XDesigner.RTF
 			}
 		}
 
+        public int GroupLevel
+        {
+            get
+            {
+                return myWriter.GroupLevel;
+            }
+        }
+
 		public void WriteStartGroup()
 		{
 			if( bolCollectionInfo == false )
@@ -175,6 +188,24 @@ namespace XDesigner.RTF
 			}
 		}
 
+        public void WriteKeyword(string keyWord, bool Ext )
+        {
+            if (bolCollectionInfo == false)
+            {
+                myWriter.WriteKeyword(keyWord, Ext);
+            }
+        }
+
+        public void WriteRaw(string txt)
+        {
+            if (bolCollectionInfo == false)
+            {
+                if (txt != null)
+                {
+                    myWriter.WriteRaw(txt);
+                }
+            }
+        }
 		public void WriteBorderLineDashStyle( System.Drawing.Drawing2D.DashStyle style )
 		{
 			if( bolCollectionInfo == false )
@@ -201,6 +232,16 @@ namespace XDesigner.RTF
 				}
 			}
 		}
+
+        private bool _DebugMode = true;
+        /// <summary>
+        /// 处于调试模式
+        /// </summary>
+        public bool DebugMode
+        {
+            get { return _DebugMode; }
+            set { _DebugMode = value; }
+        }
 
 		/// <summary>
 		/// start write document
@@ -269,9 +310,13 @@ namespace XDesigner.RTF
 					//string f = myFontTable[ iCount ] ;
 					myWriter.WriteStartGroup();
 					myWriter.WriteKeyword( "f" + iCount );
-					//myWriter.WriteKeyword( "fcharset" + f.GdiCharSet );
-                    myWriter.WriteText(myFontTable.GetFontName(iCount));
-					myWriter.WriteEndGroup();
+                    RTFFont f = myFontTable[iCount];
+                    myWriter.WriteText( f.Name );
+                    if (f.Charset != 1)
+                    {
+                        myWriter.WriteKeyword("fcharset" + f.Charset);
+                    }
+                    myWriter.WriteEndGroup();
 				}
 				myWriter.WriteEndGroup();
 
@@ -288,7 +333,123 @@ namespace XDesigner.RTF
 					myWriter.WriteRaw(";");
 				}
 				myWriter.WriteEndGroup();
-				myWriter.WriteKeyword("viewkind1");
+
+                // write list table
+                if (this.ListTable != null && this.ListTable.Count > 0)
+                {
+                    if (this.DebugMode)
+                    {
+                        myWriter.WriteRaw(Environment.NewLine);
+                    }
+                    myWriter.WriteStartGroup();
+                    myWriter.WriteKeyword("listtable", true );
+                    foreach (RTFList list in this.ListTable)
+                    {
+                        if (this.DebugMode)
+                        {
+                            myWriter.WriteRaw(Environment.NewLine);
+                        }
+                        myWriter.WriteStartGroup();
+                        myWriter.WriteKeyword("list");
+                        myWriter.WriteKeyword("listtemplateid" + list.ListTemplateID);
+                        if (list.ListHybrid)
+                        {
+                            myWriter.WriteKeyword("listhybrid");
+                        }
+                        if (this.DebugMode)
+                        {
+                            myWriter.WriteRaw(Environment.NewLine);
+                        }
+                        myWriter.WriteStartGroup();
+                        myWriter.WriteKeyword("listlevel");
+                        myWriter.WriteKeyword("levelfollow" + list.LevelFollow);
+                        myWriter.WriteKeyword("leveljc" + list.LevelJc);
+                        myWriter.WriteKeyword("levelstartat" + list.LevelStartAt);
+                        myWriter.WriteKeyword("levelnfc" + Convert.ToInt32( list.LevelNfc));
+                        myWriter.WriteKeyword("levelnfcn" + Convert.ToInt32(list.LevelNfc));
+                        myWriter.WriteKeyword("leveljc" + list.LevelJc);
+                        
+                        //if (list.LevelNfc == LevelNumberType.Bullet)
+                        {
+                            if (string.IsNullOrEmpty(list.LevelText) == false)
+                            {
+                                myWriter.WriteStartGroup();
+                                myWriter.WriteKeyword("leveltext");
+                                myWriter.WriteKeyword("'0" + list.LevelText.Length);
+                                if (list.LevelNfc == LevelNumberType.Bullet)
+                                {
+                                    myWriter.WriteUnicodeText(list.LevelText);
+                                }
+                                else
+                                {
+                                    myWriter.WriteText(list.LevelText , false );
+
+
+                                }
+                                //myWriter.WriteStartGroup();
+                                //myWriter.WriteKeyword("uc1");
+                                //int v = (int)list.LevelText[0];
+                                //short uv = (short)v;
+                                //myWriter.WriteKeyword("u" + uv);
+                                //myWriter.WriteRaw(" ?");
+                                //myWriter.WriteEndGroup();
+                                //myWriter.WriteRaw(";");
+                                myWriter.WriteEndGroup();
+                                if (list.LevelNfc == LevelNumberType.Bullet)
+                                {
+                                    RTFFont f = this.FontTable["Wingdings"];
+                                    if (f != null)
+                                    {
+                                        myWriter.WriteKeyword("f" + f.Index);
+                                    }
+                                }
+                                else
+                                {
+                                    myWriter.WriteStartGroup();
+                                    myWriter.WriteKeyword("levelnumbers");
+                                    myWriter.WriteKeyword("'01");
+                                    myWriter.WriteEndGroup();
+                                }
+                            }
+                        }
+                        myWriter.WriteEndGroup();
+
+                        myWriter.WriteKeyword("listid" + list.ListID);
+                        myWriter.WriteEndGroup();
+                    }
+                    myWriter.WriteEndGroup();
+                }
+
+                // write list overried table
+                if (this.ListOverrideTable != null && this.ListOverrideTable.Count > 0)
+                {
+                    if (this.DebugMode)
+                    {
+                        myWriter.WriteRaw(Environment.NewLine);
+                    }
+                    myWriter.WriteStartGroup();
+                    myWriter.WriteKeyword("listoverridetable");
+                    foreach (RTFListOverride lo in this.ListOverrideTable)
+                    {
+                        if (this.DebugMode)
+                        {
+                            myWriter.WriteRaw(Environment.NewLine);
+                        }
+                        myWriter.WriteStartGroup();
+                        myWriter.WriteKeyword("listoverride");
+                        myWriter.WriteKeyword("listid" + lo.ListID);
+                        myWriter.WriteKeyword("listoverridecount" + lo.ListOverriedCount);
+                        myWriter.WriteKeyword("ls" + lo.ID);
+                        myWriter.WriteEndGroup();
+                    }
+                    myWriter.WriteEndGroup();
+                }
+
+                if (this.DebugMode)
+                {
+                    myWriter.WriteRaw(Environment.NewLine);
+                }
+                myWriter.WriteKeyword("viewkind1");
 			}
 		}
 
@@ -301,6 +462,7 @@ namespace XDesigner.RTF
 			{
 				myWriter.WriteEndGroup();
 			}
+            myWriter.Flush();
 		}
 
 		/// <summary>
@@ -366,103 +528,125 @@ namespace XDesigner.RTF
 		{
 			if( this.bolCollectionInfo )
 			{
-				myFontTable.Add("Wingdings");
+				//myFontTable.Add("Wingdings");
 			}
 			else
-			{
-				if( bolFirstParagraph )
-				{
-					bolFirstParagraph = false ;
-					myWriter.WriteRaw(System.Environment.NewLine );
-					//myWriter.WriteKeyword("par");
-				}
-				else
-				{
-					myWriter.WriteKeyword("par");
-				}
-				if( info.NumberedList || info.BulletedList )
-				{
-					if( info.NumberedList )
-					{
-						if( myLastParagraphInfo == null || myLastParagraphInfo.NumberedList != info.NumberedList )
-						{
-							myWriter.WriteKeyword("pard");
-							myWriter.WriteStartGroup();
-							myWriter.WriteKeyword("pn" , true );
-							myWriter.WriteKeyword("pnlvlbody");
-							myWriter.WriteKeyword("pnindent400");
-							myWriter.WriteKeyword("pnstart1");
-							myWriter.WriteKeyword("pndec");
-							myWriter.WriteEndGroup();
-						}
-					}
-					else
-					{
-						if( myLastParagraphInfo == null || myLastParagraphInfo.BulletedList != info.BulletedList )
-						{
-							myWriter.WriteKeyword("pard");
-							myWriter.WriteStartGroup();
-							myWriter.WriteKeyword("pn" , true );
-							myWriter.WriteKeyword("pnlvlblt");
-							myWriter.WriteKeyword("pnindent400");
-							myWriter.WriteKeyword("pnf" + myFontTable.IndexOf( "Wingdings" ));
-							myWriter.WriteStartGroup();
-							myWriter.WriteKeyword("pntxtb");
-							myWriter.WriteText("l");
-							//myWriter.WriteKeyword("'B7");
-							myWriter.WriteEndGroup();
-							myWriter.WriteEndGroup();
-						}
-					}
-					myWriter.WriteKeyword("fi-400");
-				}
-				else
-				{
-					if( myLastParagraphInfo != null )
-					{
-						if( myLastParagraphInfo.NumberedList || myLastParagraphInfo.BulletedList )
-							myWriter.WriteKeyword("pard");
-					}
-				}
+            {
+                if (bolFirstParagraph)
+                {
+                    bolFirstParagraph = false;
+                    myWriter.WriteRaw(System.Environment.NewLine);
+                    //myWriter.WriteKeyword("par");
+                }
+                else
+                {
+                    myWriter.WriteKeyword("par");
+                }
+                if (info.ListID >= 0)
+                {
+                    myWriter.WriteKeyword("pard");
+                    myWriter.WriteKeyword("ls" + info.ListID.ToString());
+                }
+                //if( lo != null && listInfo != null )
+                //{
+                //    myWriter.WriteKeyword("pard");
+                //    myWriter.WriteKeyword("ls" , lo.ListID );
+                //    if( listInfo.LevelNfc info.NumberedList )
+                //    {
+                //        if( myLastParagraphInfo == null 
+                //            || myLastParagraphInfo.NumberedList != info.NumberedList )
+                //        {
+                //            myWriter.WriteKeyword("pard");
+                //            myWriter.WriteStartGroup();
+                //            myWriter.WriteKeyword("pn" , true );
+                //            myWriter.WriteKeyword("pnlvlbody");
+                //            myWriter.WriteKeyword("pnindent400");
+                //            myWriter.WriteKeyword("pnstart1");
+                //            myWriter.WriteKeyword("pndec");
+                //            myWriter.WriteEndGroup();
+                //        }
+                //    }
+                //    else
+                //    {
+                //        if( myLastParagraphInfo == null
+                //            || myLastParagraphInfo.BulletedList != info.BulletedList )
+                //        {
+                //            myWriter.WriteKeyword("pard");
+                //            myWriter.WriteStartGroup();
+                //            myWriter.WriteKeyword("pn" , true );
+                //            myWriter.WriteKeyword("pnlvlblt");
+                //            myWriter.WriteKeyword("pnindent400");
+                //            myWriter.WriteKeyword("pnf" + myFontTable.IndexOf( "Wingdings" ));
+                //            myWriter.WriteStartGroup();
+                //            myWriter.WriteKeyword("pntxtb");
+                //            myWriter.WriteText("l");
+                //            //myWriter.WriteKeyword("'B7");
+                //            myWriter.WriteEndGroup();
+                //            myWriter.WriteEndGroup();
+                //        }
+                //    }
+                //    myWriter.WriteKeyword("fi-400");
+                //}
+                //else
+                {
+                    if (myLastParagraphInfo != null)
+                    {
+                        if (myLastParagraphInfo.ListID >= 0)
+                        {
+                            myWriter.WriteKeyword("pard");
+                        }
+                    }
+                }
 
-				switch( info.Align )
-				{
-					case RTFAlignment.Left  :
-						myWriter.WriteKeyword("ql");
-						break;
-					case RTFAlignment.Center :
-						myWriter.WriteKeyword("qc");
-						break;
-					case RTFAlignment.Right :
-						myWriter.WriteKeyword("qr");
-						break;
-					case RTFAlignment.Justify :
-						myWriter.WriteKeyword("qj");
-						break;
-				}
-//
-//				if( info.LeftAlign )
-//					myWriter.WriteKeyword("ql");
-//				if( info.CenterAlign )
-//					myWriter.WriteKeyword("qc");
-//				else if( info.RigthAlign )
-//					myWriter.WriteKeyword("qr");
-				if( info.NumberedList == false && info.BulletedList == false )
-				{
-					if( info.ParagraphFirstLineIndent != 0 )
-						myWriter.WriteKeyword("fi" + Convert.ToInt32( info.ParagraphFirstLineIndent * 400 / info.StandTabWidth ));
-					else
-						myWriter.WriteKeyword("fi0");
-				}
-				//if( info.NumberedList == false && info.BulletedList == false )
-				{
-					if( info.LeftIndent != 0 )
-						myWriter.WriteKeyword("li" + Convert.ToInt32( info.LeftIndent * 400 / info.StandTabWidth ));
-					else
-						myWriter.WriteKeyword("li0");
-				}
-				myWriter.WriteKeyword("plain");
-			}
+                switch (info.Align)
+                {
+                    case RTFAlignment.Left:
+                        myWriter.WriteKeyword("ql");
+                        break;
+                    case RTFAlignment.Center:
+                        myWriter.WriteKeyword("qc");
+                        break;
+                    case RTFAlignment.Right:
+                        myWriter.WriteKeyword("qr");
+                        break;
+                    case RTFAlignment.Justify:
+                        myWriter.WriteKeyword("qj");
+                        break;
+                }
+                //
+                //				if( info.LeftAlign )
+                //					myWriter.WriteKeyword("ql");
+                //				if( info.CenterAlign )
+                //					myWriter.WriteKeyword("qc");
+                //				else if( info.RigthAlign )
+                //					myWriter.WriteKeyword("qr");
+
+                //if( info.NumberedList == false && info.BulletedList == false )
+                {
+                    if (info.ParagraphFirstLineIndent != 0)
+                    {
+                        myWriter.WriteKeyword("fi" + Convert.ToInt32(
+                            info.ParagraphFirstLineIndent * 400 / info.StandTabWidth));
+                    }
+                    else
+                    {
+                        myWriter.WriteKeyword("fi0");
+                    }
+                }
+                //if( info.NumberedList == false && info.BulletedList == false )
+                {
+                    if (info.LeftIndent != 0)
+                    {
+                        myWriter.WriteKeyword("li" + Convert.ToInt32(
+                            info.LeftIndent * 400 / info.StandTabWidth));
+                    }
+                    else
+                    {
+                        myWriter.WriteKeyword("li0");
+                    }
+                }
+                myWriter.WriteKeyword("plain");
+            }
 			myLastParagraphInfo = info ;
 		}
 
@@ -533,91 +717,105 @@ namespace XDesigner.RTF
 		/// <remarks>
         /// This function must assort with WriteEndString strict
 		/// </remarks>
-		public void WriteStartString( DocumentFormatInfo info )
-		{
-			if( this.bolCollectionInfo )
-			{
-				myFontTable.Add( info.FontName );
-				myColorTable.Add( info.TextColor );
-				myColorTable.Add( info.BackColor );
-                if( info.BorderColor.A != 0 )
+        public void WriteStartString(DocumentFormatInfo info)
+        {
+            if (this.bolCollectionInfo)
+            {
+                myFontTable.Add(info.FontName);
+                myColorTable.Add(info.TextColor);
+                myColorTable.Add(info.BackColor);
+                if (info.BorderColor.A != 0)
                 {
-                    myColorTable.Add( info.BorderColor );
+                    myColorTable.Add(info.BorderColor);
                 }
-				return ;
-			}
-			if( info.Link != null && info.Link.Length > 0 )
-			{
-				myWriter.WriteStartGroup();
-				myWriter.WriteKeyword("field");
-				myWriter.WriteStartGroup();
-				myWriter.WriteKeyword("fldinst" , true );
-				myWriter.WriteStartGroup();
-				myWriter.WriteKeyword("hich");
-				myWriter.WriteText(" HYPERLINK \"" + info.Link + "\"");
-				myWriter.WriteEndGroup();
-				myWriter.WriteEndGroup();
-				myWriter.WriteStartGroup();
-				myWriter.WriteKeyword("fldrslt");
-				myWriter.WriteStartGroup();
-			}
+                return;
+            }
+            if (info.Link != null && info.Link.Length > 0)
+            {
+                myWriter.WriteStartGroup();
+                myWriter.WriteKeyword("field");
+                myWriter.WriteStartGroup();
+                myWriter.WriteKeyword("fldinst", true);
+                myWriter.WriteStartGroup();
+                myWriter.WriteKeyword("hich");
+                myWriter.WriteText(" HYPERLINK \"" + info.Link + "\"");
+                myWriter.WriteEndGroup();
+                myWriter.WriteEndGroup();
+                myWriter.WriteStartGroup();
+                myWriter.WriteKeyword("fldrslt");
+                myWriter.WriteStartGroup();
+            }
 
-			switch( info.Align )
-			{
-				case RTFAlignment.Left :
-					myWriter.WriteKeyword("ql");
-					break;
-				case RTFAlignment.Center :
-					myWriter.WriteKeyword("qc");
-					break;
-				case RTFAlignment.Right :
-					myWriter.WriteKeyword("qr");
-					break;
-				case RTFAlignment.Justify :
-					myWriter.WriteKeyword("qj");
-					break;
-			}
+            switch (info.Align)
+            {
+                case RTFAlignment.Left:
+                    myWriter.WriteKeyword("ql");
+                    break;
+                case RTFAlignment.Center:
+                    myWriter.WriteKeyword("qc");
+                    break;
+                case RTFAlignment.Right:
+                    myWriter.WriteKeyword("qr");
+                    break;
+                case RTFAlignment.Justify:
+                    myWriter.WriteKeyword("qj");
+                    break;
+            }
 
-			myWriter.WriteKeyword("plain");
-			int index = 0 ;
-			index = myFontTable.IndexOf( info.FontName );
-			if( index >= 0 )
-				myWriter.WriteKeyword("f" + index );
-			if( info.Bold )
-				myWriter.WriteKeyword("b");
-			if( info.Italic )
-				myWriter.WriteKeyword("i");
-			if( info.Underline )
-				myWriter.WriteKeyword("ul");
-			if( info.Strikeout )
-				myWriter.WriteKeyword("strike");
-			myWriter.WriteKeyword("fs" + Convert.ToInt32( info.FontSize * 2 ));
-			index = myColorTable.IndexOf( info.BackColor );
-			if( index >= 0 )
-			{
-				myWriter.WriteKeyword("chcbpat" + Convert.ToString( index + 1 ) );
-			}
-			index = myColorTable.IndexOf( info.TextColor );
-			if( index >= 0 )
-				myWriter.WriteKeyword("cf" + Convert.ToString( index  + 1 ) );
-			if( info.Subscript )
-				myWriter.WriteKeyword("sub");
-			if( info.Superscript )
-				myWriter.WriteKeyword("super");
+            myWriter.WriteKeyword("plain");
+            int index = 0;
+            index = myFontTable.IndexOf(info.FontName);
+            if (index >= 0)
+                myWriter.WriteKeyword("f" + index);
+            if (info.Bold)
+                myWriter.WriteKeyword("b");
+            if (info.Italic)
+                myWriter.WriteKeyword("i");
+            if (info.Underline)
+                myWriter.WriteKeyword("ul");
+            if (info.Strikeout)
+                myWriter.WriteKeyword("strike");
+            myWriter.WriteKeyword("fs" + Convert.ToInt32(info.FontSize * 2));
+
+            // back color
+            index = myColorTable.IndexOf(info.BackColor);
+            if (index >= 0)
+            {
+                myWriter.WriteKeyword("chcbpat" + Convert.ToString(index + 1));
+            }
+
+            index = myColorTable.IndexOf(info.TextColor);
+            if (index >= 0)
+            {
+                myWriter.WriteKeyword("cf" + Convert.ToString(index + 1));
+            }
+            if (info.Subscript)
+            {
+                myWriter.WriteKeyword("sub");
+            }
+            if (info.Superscript)
+                myWriter.WriteKeyword("super");
             if (info.NoWwrap)
                 myWriter.WriteKeyword("nowwrap");
-            if (info.BorderColor.A != 0)
+            if (info.LeftBorder
+                || info.TopBorder
+                || info.RightBorder
+                || info.BottomBorder)
             {
-                myWriter.WriteKeyword("chbrdr");
-                myWriter.WriteKeyword("brdrs");
-                myWriter.WriteKeyword("brdrw10");
-                index = myColorTable.IndexOf( info.BorderColor );
-                if (index >= 0)
+                // border color
+                if (info.BorderColor.A != 0)
                 {
-                    myWriter.WriteKeyword("brdrcf" + Convert.ToString(index + 1));
+                    myWriter.WriteKeyword("chbrdr");
+                    myWriter.WriteKeyword("brdrs");
+                    myWriter.WriteKeyword("brdrw10");
+                    index = myColorTable.IndexOf(info.BorderColor);
+                    if (index >= 0)
+                    {
+                        myWriter.WriteKeyword("brdrcf" + Convert.ToString(index + 1));
+                    }
                 }
             }
-		}
+        }
 
 		public void WriteEndString( DocumentFormatInfo info )
 		{

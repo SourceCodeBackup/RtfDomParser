@@ -1,29 +1,15 @@
-/***************************************************************************
-
-  Rtf Dom Parser
-
-  Copyright (c) 2010 sinosoft , written by yuans.
-  http://www.sinoreport.net
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-****************************************************************************/
+/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
 
 using System;
 
-namespace XDesigner.RTF
+namespace DCSoft.RTF
 {
 	/// <summary>
 	/// Define some rtf key word
@@ -68,6 +54,8 @@ namespace XDesigner.RTF
         public const string _footerl = "footerl";
         public const string _footerr = "footerr";
         public const string _footerf = "footerf";
+        public const string _headery = "headery";
+        public const string _footery = "footery";
         public const string _stylesheet = "stylesheet";
         public const string _filetbl = "filetbl";
         public const string _listtable = "listtable";
@@ -77,7 +65,6 @@ namespace XDesigner.RTF
         public const string _pntext = "pntext";
         public const string _pntxtb = "pntxtb";
         public const string _pntxta = "pntxta";
-        public const string _bkmkend = "bkmkend";
         public const string _paperw = "paperw";
         public const string _paperh = "paperh";
         public const string _margl = "margl";
@@ -88,12 +75,19 @@ namespace XDesigner.RTF
         //public const string _header = "header";
         //public const string _footer = "footer";
         public const string _pard = "pard";
+        public const string _page = "page";
+        public const string _pagebb = "pagebb";
         public const string _par = "par";
         public const string _ql = "ql";
         public const string _qc = "qc";
         public const string _qr = "qr";
         public const string _qj = "qj";
         public const string _fi = "fi";
+        public const string _sl = "sl";
+        public const string _slmult = "slmult";
+        public const string _sb = "sb";
+        public const string _sa = "sa";
+        public const string _pn = "pn";
         public const string _pnlvlbody = "pnlvlbody";
         public const string _pnlvlblt = "pnlvlblt";
         public const string _listtext = "listtext";
@@ -107,11 +101,16 @@ namespace XDesigner.RTF
         public const string _cb = "cb";
         public const string _chcbpat = "chcbpat";
         public const string _i = "i";
+        public const string _u = "u";
+        public const string _v = "v";
+        public const string _highlight = "highlight";
         public const string _ul = "ul";
         public const string _strike = "strike";
         public const string _sub = "sub";
         public const string _super = "super";
+        public const string _nosupersub = "nosupersub";
         public const string _bkmkstart = "bkmkstart";
+        public const string _bkmkend = "bkmkend";
         public const string _field = "field";
         public const string _flddirty = "flddirty";
         public const string _fldedit = "fldedit";
@@ -120,9 +119,15 @@ namespace XDesigner.RTF
         public const string _fldinst = "fldinst";
         public const string _fldrslt = "fldrslt";
         public const string _HYPERLINK = "HYPERLINK";
-        public const string _objdata = "objdata";
-        public const string _objclass = "objclass";
         public const string _blipuid = "blipuid";
+        public const string _emfblip = "emfblip";
+        public const string _pngblip = "pngblip";
+        public const string _jpegblip = "jpegblip";
+        public const string _macpict = "macpict";
+        public const string _pmmetafile = "pmmetafile";
+        public const string _wmetafile = "wmetafile";
+        public const string _dibitmap = "dibitmap";
+        public const string _wbitmap = "wbitmap";
         public const string _shppict = "shppict";
         public const string _pict = "pict";
         public const string _picscalex = "picscalex";
@@ -186,9 +191,43 @@ namespace XDesigner.RTF
         public const string _brdrb = "brdrb";
         public const string _brdrl = "brdrl";
         public const string _brdrr = "brdrr";
+        public const string _brdrw = "brdrw";
         public const string _brdrcf = "brdrcf";
+        public const string _brdrs = "brdrs";
+        public const string _brdrth = "brdrth";
+        public const string _brdrdot = "brdrdot";
+        public const string _brdrdash = "brdrdash";
+        public const string _brdrdashsm = "brdrdashsm";
+        public const string _brdrdashd = "brdrdashd";
+        public const string _brdrdashdd = "brdrdashdd";
         public const string _chbrdr = "chbrdr";
+        public const string _brdrnil = "brdrnil";
+        public const string _brdrtbl = "brdrtbl";
+        public const string _brdrnone = "brdrnone";
+        public const string _brsp = "brsp";
         public const string _nonesttables = "nonesttables";
+
+        public const string _object = "object";
+        public const string _objemb = "objemb";
+        public const string _objlink = "objlink";
+        public const string _objautlink = "objautlink";
+        public const string _objsub = "objsub";
+        public const string _objpub = "objpub";
+        public const string _objicemb = "objicemb";
+        public const string _objhtml = "objhtml";
+        public const string _objocx = "objocx";
+        public const string _objclass = "objclass";
+        public const string _objname = "objname";
+        public const string _objtime = "objtime";
+        public const string _objh = "objh";
+        public const string _objw = "objw";
+        public const string _objsetsize = "objsetsize";
+        public const string _objdata = "objdata";
+        public const string _objalias = "objalias";
+        public const string _objsect = "objsect";
+        public const string _objscalex = "objscalex";
+        public const string _objscaley = "objscaley";
+        public const string _result = "result";
 
         public const string _shp = "shp";
         public const string _shpleft = "shpleft";

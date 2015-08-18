@@ -15,38 +15,29 @@ using System.Text;
 namespace DCSoft.RTF
 {
     /// <summary>
-    /// table column
+    /// line element
     /// </summary>
     [Serializable()]
-    public class RTFDomTableColumn : RTFDomElement
+    public class RTFDomLineBreak : RTFDomElement
     {
         /// <summary>
         /// initialize instance
         /// </summary>
-        public RTFDomTableColumn()
+        public RTFDomLineBreak()
         {
+            this.Locked = true;
         }
 
-        private int intWidth = 0;
-        /// <summary>
-        /// width
-        /// </summary>
-        [System.ComponentModel.DefaultValue( 0 )]
-        public int Width
+        public override string InnerText
         {
             get
             {
-                return intWidth; 
-            }
-            set
-            {
-                intWidth = value; 
+                return Environment.NewLine;
             }
         }
-
         public override string ToString()
         {
-            return "Column";
+            return "linebreak";
         }
     }
 }

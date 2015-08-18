@@ -1,29 +1,17 @@
-/***************************************************************************
+/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
 
-  Rtf Dom Parser
 
-  Copyright (c) 2010 sinosoft , written by yuans.
-  http://www.sinoreport.net
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-****************************************************************************/
 
 using System;
 
-namespace XDesigner.RTF
+namespace DCSoft.RTF
 {
 	/// <summary>
     /// RTF text writer ,  this source code evolution from other software.
@@ -196,6 +184,16 @@ namespace XDesigner.RTF
 		/// current group level
 		/// </summary>
 		private int intGroupLevel = 0 ;
+        /// <summary>
+        /// 当前组合等级
+        /// </summary>
+        public int GroupLevel
+        {
+            get
+            {
+                return intGroupLevel;
+            }
+        }
 
 		/// <summary>
 		/// close 
@@ -210,6 +208,14 @@ namespace XDesigner.RTF
 				myWriter = null;
 			}
 		}
+
+        public void Flush()
+        {
+            if (myWriter != null)
+            {
+                myWriter.Flush();
+            }
+        }
 
 		/// <summary>
 		/// write completed group wich one keyword
@@ -227,34 +233,38 @@ namespace XDesigner.RTF
 		/// </summary>
 		public void WriteStartGroup( )
 		{
-			if( bolIndent )
-			{
-				InnerWriteNewLine();
-				myWriter.Write("{");
-			}
-			else
-				myWriter.Write("{");
+            if (bolIndent)
+            {
+                InnerWriteNewLine();
+                myWriter.Write("{");
+            }
+            else
+            {
+                myWriter.Write("{");
+            }
 			intGroupLevel ++ ;
 		}
 
 		/// <summary>
 		/// end write group
 		/// </summary>
-		public void WriteEndGroup()
-		{
-			intGroupLevel -- ;
+        public void WriteEndGroup()
+        {
+            intGroupLevel--;
             if (intGroupLevel < 0)
             {
                 throw new System.Exception("group level error");
             }
-			if( bolIndent )
-			{
-				InnerWriteNewLine();
-				InnerWrite("}");
-			}
-			else
-				InnerWrite("}");
-		}
+            if (bolIndent)
+            {
+                InnerWriteNewLine();
+                InnerWrite("}");
+            }
+            else
+            {
+                InnerWrite("}");
+            }
+        }
 
 		/// <summary>
 		/// write raw text
@@ -324,6 +334,28 @@ namespace XDesigner.RTF
 			WriteText( Text , true );
 		}
 
+        public void WriteUnicodeText(string text)
+        {
+            if (string.IsNullOrEmpty(text) == false)
+            {
+                WriteKeyword("uc1");
+                foreach (char c in text)
+                {
+                    if (c > 127)
+                    {
+                        int v = (int)c;
+                        short v2 = (short)v;
+                        WriteKeyword("u" + v2.ToString());
+                        WriteRaw(" ?");
+                    }
+                    else
+                    {
+                        InnerWriteChar(c);
+                    }
+                }
+            }
+        }
+
 		/// <summary>
 		/// write plain text, can choose write a white space automatic
 		/// </summary>
@@ -342,29 +374,58 @@ namespace XDesigner.RTF
 			for( int iCount = 0 ; iCount < Text.Length ; iCount ++ )
 			{
 				char c = Text[ iCount ] ;
-				if( c == '\t')
-				{
-					this.WriteKeyword("tab");
-					InnerWrite(' ');
-				}
-				if( c > 32 && c < 127 )
-				{
-					// some specify characters , must be convert
-					if( c == '\\' || c == '{' || c == '}' )
-						InnerWrite( '\\');
-					InnerWrite( c );
-				}
-				else
-				{
-					byte[] bs = myEncoding.GetBytes( c.ToString());
-					for(int iCount2 = 0 ; iCount2 < bs.Length ; iCount2 ++ )
-					{
-						InnerWrite("\\\'");
-						WriteByte( bs[ iCount2 ] );
-					}
-				}
+                InnerWriteChar(c);
+
+                //if( c == '\t')
+                //{
+                //    this.WriteKeyword("tab");
+                //    InnerWrite(' ');
+                //}
+                //if( c > 32 && c < 127 )
+                //{
+                //    // some specify characters , must be convert
+                //    if( c == '\\' || c == '{' || c == '}' )
+                //        InnerWrite( '\\');
+                //    InnerWrite( c );
+                //}
+                //else
+                //{
+                //    byte[] bs = myEncoding.GetBytes( c.ToString());
+                //    for(int iCount2 = 0 ; iCount2 < bs.Length ; iCount2 ++ )
+                //    {
+                //        InnerWrite("\\\'");
+                //        WriteByte( bs[ iCount2 ] );
+                //    }
+                //}
 			}//for( int iCount = 0 ; iCount < Text.Length ; iCount ++ )
 		}
+
+        private void InnerWriteChar(char c)
+        {
+            if (c == '\t')
+            {
+                this.WriteKeyword("tab");
+                InnerWrite(' ');
+            }
+            if (c > 32 && c < 127)
+            {
+                // some specify characters , must be convert
+                if (c == '\\' || c == '{' || c == '}')
+                {
+                    InnerWrite('\\');
+                }
+                InnerWrite(c);
+            }
+            else
+            {
+                byte[] bs = myEncoding.GetBytes(c.ToString());
+                for (int iCount2 = 0; iCount2 < bs.Length; iCount2++)
+                {
+                    InnerWrite("\\\'");
+                    WriteByte(bs[iCount2]);
+                }
+            }
+        }
 
 		/// <summary>
 		/// current position

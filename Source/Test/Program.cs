@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
-namespace XDesigner.RTF.Test
+namespace DCSoft.RTF.Test
 {
     static class Program
     {
         /// <summary>
-        /// enter point
+        /// 应用程序的主入口点。
         /// </summary>
         [STAThread]
         static void Main()

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * 
  *   DCSoft RTF DOM v1.0
  *   Author : Yuan yong fu.
@@ -7,43 +7,39 @@
  * 
  */
 
-
-
 using System;
+using System.Collections.Generic;
 using System.Text;
 
 namespace DCSoft.RTF
 {
-    /// <summary>
-    /// rtf bookmark
-    /// </summary>
-    [Serializable()]
-    public class RTFDomBookmark : RTFDomElement
+    public class RTFDomTempContainer: RTFDomElement
     {
-        public RTFDomBookmark()
+
+        public RTFDomTempContainer()
         { 
         }
 
-        private string strName = null;
+        private DocumentFormatInfo myFormat = new DocumentFormatInfo();
         /// <summary>
-        /// name
+        /// format
         /// </summary>
-        [System.ComponentModel.DefaultValue( null )]
-        public string Name
+        public DocumentFormatInfo Format
         {
             get
             {
-                return strName; 
+                return myFormat;
             }
             set
             {
-                strName = value; 
+                myFormat = value;
             }
         }
 
         public override string ToString()
         {
-            return "BookMark:" + strName;
+            return "TempContainer";
         }
+
     }
 }

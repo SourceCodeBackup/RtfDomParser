@@ -1,7 +1,16 @@
+/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
+
 using System;
 using System.Text;
 
-namespace XDesigner.RTF
+namespace DCSoft.RTF
 {
     /// <summary>
     /// progress event handler type

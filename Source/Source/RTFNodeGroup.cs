@@ -1,6 +1,15 @@
+/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
+
 using System;
 
-namespace XDesigner.RTF
+namespace DCSoft.RTF
 {
 	/// <summary>
     /// RTF node group , this source code evolution from other software.
@@ -162,13 +171,17 @@ namespace XDesigner.RTF
 					if( node.Keyword == "emdash")
 					{
 						AddString( myStr , buffer );
-						myStr.Append( "¡ª"); // TODO: Check this literal
+						// notice!! This code may cause compiler error in OS which not support chinese character.
+						// you can change to myStr.Append('-');
+						myStr.Append( '¡ª');
 						continue ;
 					}
 					if( node.Keyword == "" )
 					{
 						AddString( myStr , buffer );
-						myStr.Append( "¨C" ); // TODO: Check this literal
+						// notice!! This code may cause compiler error in OS which not support chinese character.
+						// you can change to myStr.Append('-');
+						myStr.Append( '¨C' );
 						continue ;
 					}
 				}

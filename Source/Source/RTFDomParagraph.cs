@@ -1,30 +1,18 @@
-/***************************************************************************
+/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
 
-  Rtf Dom Parser
 
-  Copyright (c) 2010 sinosoft , written by yuans.
-  http://www.sinoreport.net
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-****************************************************************************/
 
 using System;
 using System.Text;
 
-namespace XDesigner.RTF
+namespace DCSoft.RTF
 {
     /// <summary>
     /// paragraph element
@@ -39,6 +27,17 @@ namespace XDesigner.RTF
         {
         }
 
+        internal bool TemplateGenerated = false;
+        /// <summary>
+        /// 是否是临时生成的段落对象
+        /// </summary>
+        public bool IsTemplateGenerated
+        {
+            get
+            {
+                return TemplateGenerated;
+            }
+        }
         private DocumentFormatInfo myFormat = new DocumentFormatInfo();
         /// <summary>
         /// format
@@ -63,7 +62,26 @@ namespace XDesigner.RTF
         }
         public override string ToString()
         {
-            return "Paragraph";
+            StringBuilder str = new StringBuilder();
+            str.Append("Paragraph");
+            if (this.Format != null)
+            {
+                str.Append("(" + this.Format.Align + ")");
+                if (this.Format.ListID >= 0)
+                {
+                    str.Append("ListID:" + this.Format.ListID);
+                }
+                //if (this.Format.NumberedList)
+                //{
+                //    str.Append("(NumberedList)");
+                //}
+                //else if (this.Format.BulletedList)
+                //{
+                //    str.Append("(BulletedList)");
+                //}
+            }
+            
+            return str.ToString();
         }
     }
 }

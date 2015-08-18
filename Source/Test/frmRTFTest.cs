@@ -1,26 +1,11 @@
-﻿/***************************************************************************
-
-  Rtf Dom Parser
-
-  Copyright (c) 2010 sinosoft , written by yuans.
-  http://www.sinoreport.net
-
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
-  
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-  
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-
-****************************************************************************/
-
+﻿/*
+ * 
+ *   DCSoft RTF DOM v1.0
+ *   Author : Yuan yong fu.
+ *   Email  : yyf9989@hotmail.com
+ *   blog site:http://www.cnblogs.com/xdesigner.
+ * 
+ */
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,8 +13,9 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using DCSoft.RTF;
 
-namespace XDesigner.RTF.Test
+namespace DCSoft.RTF.Test
 {
     public partial class frmRTFTest : Form
     {
@@ -47,7 +33,7 @@ namespace XDesigner.RTF.Test
                 if (dlg.ShowDialog(this) == DialogResult.OK)
                 {
                     this.Update();
-                    XDesigner.RTF.RTFDomDocument doc = new XDesigner.RTF.RTFDomDocument();
+                    DCSoft.RTF.RTFDomDocument doc = new DCSoft.RTF.RTFDomDocument();
                     doc.Progress += new ProgressEventHandler(doc_Progress);
                     doc.Load(dlg.FileName);
                     txtRTFDom.Text = doc.ToDomString();
@@ -56,12 +42,54 @@ namespace XDesigner.RTF.Test
                 }
             }
         }
-         
 
         void doc_Progress(object sender, ProgressEventArgs args)
         {
             myProgress.Maximum = args.MaxValue;
             myProgress.Value = args.Value;
+        }
+
+        private void btnLoadClipboardRTF_Click(object sender, EventArgs e)
+        {
+            IDataObject ido = Clipboard.GetDataObject();
+            if (ido.GetDataPresent(DataFormats.Rtf))
+            {
+                string rtf = ( string ) ido.GetData(DataFormats.Rtf);
+                RTFDomDocument doc = new RTFDomDocument();
+                doc.Progress +=new ProgressEventHandler(doc_Progress);
+                doc.LoadRTFText(rtf);
+                txtRTFDom.Text = doc.ToDomString();
+                this.Text = "";
+                myProgress.Value = 0;
+
+            }
+        }
+
+        private void btnLoadFile_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog dlg = new OpenFileDialog())
+            {
+                dlg.Filter = "*.RTF|*.rtf";
+                dlg.CheckFileExists = true;
+                if (dlg.ShowDialog(this) == DialogResult.OK)
+                {
+                    using (System.IO.StreamReader reader = new System.IO.StreamReader(dlg.FileName, Encoding.ASCII))
+                    {
+                        txtRTFSource.Text = reader.ReadToEnd();
+                        this.Text = dlg.FileName;
+                    }
+                }
+            }
+        }
+
+        private void btnCopyText_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetData(DataFormats.Text, txtRTFSource.Text);
+        }
+
+        private void btnCopyRTF_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetData(DataFormats.Rtf, txtRTFSource.Text);
         }
     }
 }
