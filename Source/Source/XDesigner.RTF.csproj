@@ -1,0 +1,99 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{D35F9B37-CF93-48AE-9A1A-3A99930F04FB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>XDesigner.RTF</RootNamespace>
+    <AssemblyName>XDesigner.RTF</AssemblyName>
+    <SccProjectName>
+    </SccProjectName>
+    <SccLocalPath>
+    </SccLocalPath>
+    <SccAuxPath>
+    </SccAuxPath>
+    <SccProvider>
+    </SccProvider>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>yyf.snk</AssemblyOriginatorKeyFile>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ByteBuffer.cs" />
+    <Compile Include="DocumentFormatInfo.cs" />
+    <Compile Include="RTFInstanceDebugView.cs" />
+    <Compile Include="ProgressEventHandler.cs" />
+    <Compile Include="RTFDomBookmark.cs" />
+    <Compile Include="RTFDomElementList.cs" />
+    <Compile Include="RTFDomField.cs" />
+    <Compile Include="RTFDomImage.cs" />
+    <Compile Include="RTFDomLine.cs" />
+    <Compile Include="RTFDomParagraph.cs" />
+    <Compile Include="RTFDomShape.cs" />
+    <Compile Include="RTFDomShapeGroup.cs" />
+    <Compile Include="RTFDomTable.cs" />
+    <Compile Include="RTFDomTableCell.cs" />
+    <Compile Include="RTFDomTableColumn.cs" />
+    <Compile Include="RTFDomTableRow.cs" />
+    <Compile Include="RTFDomText.cs" />
+    <Compile Include="RTFDomElementContainer.cs" />
+    <Compile Include="StringAttribute.cs" />
+    <Compile Include="Parser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Documents\Word_2002_RTF_Specification_Final.doc" />
+    <None Include="yyf.snk" />
+    <Compile Include="RTFAlignment.cs" />
+    <Compile Include="RTFAttribute.cs" />
+    <Compile Include="RTFColorTable.cs" />
+    <Compile Include="RTFConsts.cs" />
+    <Compile Include="RTFDocumentInfo.cs" />
+    <Compile Include="RTFDocumentWriter.cs" />
+    <Compile Include="RTFDomDocument.cs" />
+    <Compile Include="RTFDomElement.cs" />
+    <Compile Include="RTFFontTable.cs" />
+    <Compile Include="RTFNode.cs" />
+    <Compile Include="RTFNodeGroup.cs" />
+    <Compile Include="RTFNodeList.cs" />
+    <Compile Include="RTFNodeType.cs" />
+    <Compile Include="RTFRawDocument.cs" />
+    <Compile Include="RTFUtil.cs" />
+    <Compile Include="RTFVerticalAlignment.cs" />
+    <Compile Include="RTFWriter.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
