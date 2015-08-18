@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCSoft.RTF", "Source\DCSoft.RTF.csproj", "{D35F9B37-CF93-48AE-9A1A-3A99930F04FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtfDomParser", "RtfDomParser\RtfDomParser.csproj", "{D35F9B37-CF93-48AE-9A1A-3A99930F04FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DCSoft.RTF.Test", "Test\DCSoft.RTF.Test.csproj", "{E91ECAF1-8270-4BD2-8517-5F28DF5B8058}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtfDomParser.WinFormsDemo", "RtfDomParser.WinFormsDemo\RtfDomParser.WinFormsDemo.csproj", "{E91ECAF1-8270-4BD2-8517-5F28DF5B8058}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

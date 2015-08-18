@@ -115,7 +115,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Source\DCSoft.RTF.csproj">
+    <ProjectReference Include="..\RtfDomParser\RtfDomParser.csproj">
       <Project>{D35F9B37-CF93-48AE-9A1A-3A99930F04FB}</Project>
       <Name>XDesigner.RTF</Name>
     </ProjectReference>
