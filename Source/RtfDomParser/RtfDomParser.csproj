@@ -97,7 +97,6 @@
     <Compile Include="StringAttribute.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="Documents\Word_2002_RTF_Specification_Final.doc" />
     <None Include="yyf.snk" />
     <Compile Include="RTFAlignment.cs" />
     <Compile Include="RTFAttribute.cs" />

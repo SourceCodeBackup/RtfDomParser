@@ -1,9 +1,13 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtfDomParser", "RtfDomParser\RtfDomParser.csproj", "{D35F9B37-CF93-48AE-9A1A-3A99930F04FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtfDomParser.WinFormsDemo", "RtfDomParser.WinFormsDemo\RtfDomParser.WinFormsDemo.csproj", "{E91ECAF1-8270-4BD2-8517-5F28DF5B8058}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RtfDomParser.Tests", "RtfDomParser.Tests\RtfDomParser.Tests.csproj", "{C2283E51-A105-4FF3-96B4-C77DAC45F2E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +23,10 @@ Global
 		{E91ECAF1-8270-4BD2-8517-5F28DF5B8058}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E91ECAF1-8270-4BD2-8517-5F28DF5B8058}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E91ECAF1-8270-4BD2-8517-5F28DF5B8058}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2283E51-A105-4FF3-96B4-C77DAC45F2E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2283E51-A105-4FF3-96B4-C77DAC45F2E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2283E51-A105-4FF3-96B4-C77DAC45F2E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2283E51-A105-4FF3-96B4-C77DAC45F2E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
