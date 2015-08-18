@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>RtfDomParser</id>
+        <version>1.0.0</version>
+        <title>RTF DOM Parser</title>
+        <authors>Nikolay.IT,yuan yong fu</authors>
+        <projectUrl>https://github.com/NikolayIT/RtfDomParser</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>RtfDomParser (a.k.a. DCSoft.RTF and XDesigner.RTF) is an open source C# library for parsing RTF documents and generating RTF DOM Tree.</description>
+        <releaseNotes>Original version from yuan yong fu targeting .NET 2.0 with DCSoft.RTF namespaces.</releaseNotes>
+        <tags>RTF, RtfDomParser, DCSoft.RTF, XDesigner.RTF</tags>
+    </metadata>
+    <files>
+        <file src="Source\Source\bin\Release\DCSoft.RTF.dll" target="lib\DCSoft.RTF.dll" />
+    </files>
+</package>
