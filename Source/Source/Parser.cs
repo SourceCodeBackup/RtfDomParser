@@ -75,7 +75,7 @@ namespace DCSoft.RTF
                                 && reader.LastToken.Key == "u"
                                 && reader.LastToken.HasParam)
                             {
-                                // ½ô¸úÔÚÔÚ¡°\uN¡±ºóÃæµÄÎÊºÅºöÂÔµô
+                                // ç´§è·Ÿåœ¨åœ¨â€œ\uNâ€åé¢çš„é—®å·å¿½ç•¥æ‰
                                 if (token.Key.Length > 0)
                                 {
                                     CheckBuffer();
@@ -87,7 +87,7 @@ namespace DCSoft.RTF
                     }
                     //else if (token.Key == "\"")
                     //{
-                    //    // Ë«ÒıºÅ¿ªÍ·,Ò»Ö±¶ÁÈ¡ÄÚÈİµ½Ë«ÒıºÅ½áÊø
+                    //    // åŒå¼•å·å¼€å¤´,ä¸€ç›´è¯»å–å†…å®¹åˆ°åŒå¼•å·ç»“æŸ
                     //    CheckBuffer();
                     //    while (true)
                     //    {
@@ -128,7 +128,7 @@ namespace DCSoft.RTF
             {
                 // Unicode char
                 CheckBuffer();
-                // ²»ºöÂÔ \u Ö¸Áî
+                // ä¸å¿½ç•¥ \u æŒ‡ä»¤
                 myStr.Append( (char)token.Param);
                 reader.CurrentLayerInfo.UCValueCount = reader.CurrentLayerInfo.UCValue;
                 return true;
@@ -142,12 +142,12 @@ namespace DCSoft.RTF
             if ( token.Key == "emdash")
             {
                 CheckBuffer();
-                myStr.Append("¡ª"); // TODO: Check this literal
+                myStr.Append('â€”');
                 return true;
             }
             if ( token.Key == "")
             {
-                // ÌáÊ¾Î´Ê¶±ğµÄ×Ö·û
+                // æç¤ºæœªè¯†åˆ«çš„å­—ç¬¦
                 CheckBuffer();
                 myStr.Append('-');
                 return true;
@@ -652,19 +652,19 @@ namespace DCSoft.RTF
 			c = myReader.Read();
             if (c == '\"')
             {
-                // ÒÔË«ÒıºÅ¿ªÍ·£¬¶ÁÈ¡Á¬ĞøµÄ×Ö·û
+                // ä»¥åŒå¼•å·å¼€å¤´ï¼Œè¯»å–è¿ç»­çš„å­—ç¬¦
                 System.Text.StringBuilder str = new System.Text.StringBuilder();
                 while (true)
                 {
                     c = myReader.Read();
                     if (c < 0)
                     {
-                        // ¶ÁÈ¡½áÊø
+                        // è¯»å–ç»“æŸ
                         break;
                     }
                     if (c == '\"')
                     {
-                        // ¶ÁÈ¡½áÊø
+                        // è¯»å–ç»“æŸ
                         break;
                     }
                     else
