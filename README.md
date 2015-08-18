@@ -1,7 +1,9 @@
-# RTF-DOM-Parser
-RTF DOM Parser is an open source C# library for parsing RTF documents and generating RTF DOM Tree.
+# XDesigner.RTF (RTF DOM Parser)
+XDesigner.RTF (RTF DOM Parser) is an open source C# library for parsing RTF documents and generating RTF DOM Tree.
 
 Initially the project was started by **yuansfu** and was located on http://sourceforge.net/projects/rtfdomparser/
+
+The development of the project is dead so here I will continue to support the code and will provide NuGet packages for easier installation.
 
 ## Features
 * Parse RTF and generate dom tree.
