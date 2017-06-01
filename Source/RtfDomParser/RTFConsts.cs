@@ -105,6 +105,7 @@ namespace RtfDomParser
         public const string _v = "v";
         public const string _highlight = "highlight";
         public const string _ul = "ul";
+        public const string _noul = "ulnone";
         public const string _strike = "strike";
         public const string _sub = "sub";
         public const string _super = "super";
