@@ -2349,6 +2349,15 @@ namespace RtfDomParser
                                 }
                                 break;
                             }
+                        case RTFConsts._noul:
+                        {
+                            // no underline
+                            bolStartContent = true;
+                            format.Underline = false;
+                            
+                            break;
+                        }
+
                         case RTFConsts._strike:
                             {
                                 // strikeout
