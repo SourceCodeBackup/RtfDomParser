@@ -1808,7 +1808,7 @@ namespace RtfDomParser
                             {
                                 // analyse footer
                                 RTFDomFooter footer = new RTFDomFooter();
-                                footer.Style = HeaderFooterStyle.FirstPage;
+                                footer.Style = HeaderFooterStyle.AllPages;
                                 this.AppendChild(footer);
                                 Load(reader, parentFormat);
                                 footer.Locked = true;
