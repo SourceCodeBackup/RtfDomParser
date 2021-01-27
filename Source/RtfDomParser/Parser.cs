@@ -650,6 +650,13 @@ namespace RtfDomParser
 			//myReader.Read();
 
 			c = myReader.Read();
+
+            /*
+            // Unknown what this particular code is for. It appears that if a block starts with a quote
+            // then we read until and end quote is found and add that as a text block. However, if no
+            // end quote is found and we hit and open or close token, then any text is thrown away.
+            // What is this code for?
+
             if (c == '\"')
             {
                 // 以双引号开头，读取连续的字符
@@ -676,6 +683,7 @@ namespace RtfDomParser
                 token.Key = str.ToString();
                 return token;
             }
+            */
 
 			while( c == '\r'
 				|| c == '\n'
