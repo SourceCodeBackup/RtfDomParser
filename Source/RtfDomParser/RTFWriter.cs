@@ -19,94 +19,9 @@ namespace RtfDomParser
 	/// </summary>
 	public class RTFWriter : System.IDisposable
 	{
-	
-		#region test ******************************************************
-         
-		/// <summary>
-		/// Test generate rtf file
-		/// after execute this function you can open c:\a.rtf
-		/// </summary>
-		internal static void TestWriteFile( )
-		{
-			RTFWriter w = new RTFWriter( "c:\\a.rtf" ) ;
-			TestBuildRTF( w );
-			w.Close();
-			System.Windows.Forms.MessageBox.Show("OK , you can open file c:\\a.rtf ак.");
-		}
-
-		/// <summary>
-		/// Test generate rtf text and copy to windows clipboard
-		/// after execute this function , you can paste rtf text in MS Word
-		/// </summary>
-		internal static void TestClipboard()
-		{
-			System.IO.StringWriter myStr = new System.IO.StringWriter();
-			RTFWriter w = new RTFWriter( myStr );
-			TestBuildRTF( w );
-			w.Close();
-			System.Windows.Forms.DataObject data = new System.Windows.Forms.DataObject();
-			data.SetData( System.Windows.Forms.DataFormats.Rtf , myStr.ToString());
-			System.Windows.Forms.Clipboard.SetDataObject( data , true );
-			System.Windows.Forms.MessageBox.Show("OK, you can paste words in MS Word.");
-		}
         static RTFWriter() => Defaults.LoadEncodings();
 
-		/// <summary>
-		/// Test to generate a little rtf document
-		/// </summary>
-		/// <param name="w">RTF text writer</param>
-		private static void TestBuildRTF( RTFWriter w )
-		{
-			w.Encoding = System.Text.Encoding.GetEncoding( 936 );
-			// write header
-			w.WriteStartGroup();
-			w.WriteKeyword("rtf1");
-			w.WriteKeyword("ansi");
-			w.WriteKeyword("ansicpg" + w.Encoding.CodePage );
-			// wirte font table
-			w.WriteStartGroup();
-			w.WriteKeyword("fonttbl");
-			w.WriteStartGroup();
-			w.WriteKeyword("f0");
-			w.WriteText("Arial;");
-			w.WriteEndGroup();
-			w.WriteStartGroup();
-			w.WriteKeyword("f1");
-            w.WriteText("Times New Roman;");
-			w.WriteEndGroup();
-			w.WriteEndGroup();
-			// write color table
-			w.WriteStartGroup();
-			w.WriteKeyword("colortbl");
-			w.WriteText(";");
-			w.WriteKeyword("red0");
-			w.WriteKeyword("green0");
-			w.WriteKeyword("blue255");
-			w.WriteText(";");
-			w.WriteEndGroup();
-			// write content
-			w.WriteKeyword("qc");	// set alignment center
-			w.WriteKeyword("f0");	// set font
-			w.WriteKeyword("fs30");	// set font size
-			w.WriteText("This is the first paragraph text ");
-			w.WriteKeyword("cf1");	// set text color
-            w.WriteText("Arial ");
-			w.WriteKeyword("cf0");	// set default color
-			w.WriteKeyword("f1");	// set font
-			w.WriteText("Align center ABC12345");
-			w.WriteKeyword("par");	// new paragraph
-			w.WriteKeyword("pard");	// clear format
-			w.WriteKeyword("f1");	// set font 
-			w.WriteKeyword("fs20");	// set font size
-			w.WriteKeyword("cf1");
-			w.WriteText("This is the secend paragraph Arial left alignment ABC12345");
-			// finish
-			w.WriteEndGroup();
-		}
-
-		#endregion
-
-		/// <summary>
+        /// <summary>
 		/// Initialize instance
 		/// </summary>
 		/// <param name="w">text writer</param>
