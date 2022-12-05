@@ -403,7 +403,7 @@ namespace RtfDomParser
             }
         }
 
-        private string strFontName = System.Windows.Forms.Control.DefaultFont.Name;
+        private string strFontName = Defaults.FontName;
         /// <summary>
         /// font name
         /// </summary>
@@ -801,7 +801,7 @@ namespace RtfDomParser
 
         public void ResetText()
         {
-            this.FontName = System.Windows.Forms.Control.DefaultFont.Name;
+            this.FontName = Defaults.FontName;
             this.FontSize = 12;
             this.Bold = false;
             this.Italic = false;
@@ -861,7 +861,7 @@ namespace RtfDomParser
             this.SpacingBefore = 0;
             this.SpacingAfter = 0;
             this.Align = 0;
-            this.FontName = System.Windows.Forms.Control.DefaultFont.Name;
+            this.FontName = Defaults.FontName;
             this.FontSize = 12;
             this.Bold = false;
             this.Italic = false;
@@ -1145,7 +1145,7 @@ namespace RtfDomParser
 //            }
 //        }
 
-//        private string strFontName = System.Windows.Forms.Control.DefaultFont.Name;
+//        private string strFontName = Defaults.FontName;
 //        /// <summary>
 //        /// font name
 //        /// </summary>
@@ -1522,7 +1522,7 @@ namespace RtfDomParser
 
 //        public void ResetText()
 //        {
-//            this.FontName = System.Windows.Forms.Control.DefaultFont.Name;
+//            this.FontName = Defaults.FontName;
 //            this.FontSize = 12;
 //            this.Bold = false;
 //            this.Italic = false;
@@ -1562,7 +1562,7 @@ namespace RtfDomParser
 //            this.Spacing = 0;
 //            this.LineSpacing = 0;
 //            this.Align = 0;
-//            this.FontName = System.Windows.Forms.Control.DefaultFont.Name;
+//            this.FontName = Defaults.FontName;
 //            this.FontSize = 12;
 //            this.Bold = false;
 //            this.Italic = false;

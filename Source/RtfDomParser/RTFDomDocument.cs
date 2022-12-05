@@ -98,7 +98,7 @@ namespace RtfDomParser
         /// <summary>
         /// default font name
         /// </summary>
-        private static string DefaultFontName = System.Windows.Forms.Control.DefaultFont.Name;
+        private static string DefaultFontName = Defaults.FontName;
 
 
         private RTFFontTable myFontTable = new RTFFontTable();
@@ -3440,7 +3440,7 @@ namespace RtfDomParser
                         }
                         else if (reader.Keyword == "fnil")
                         {
-                            name = System.Windows.Forms.Control.DefaultFont.Name;
+                            name = Defaults.FontName;
                             nilFlag = true;
                         }
                         else if (reader.Keyword == RTFConsts._fcharset)
@@ -3478,7 +3478,7 @@ namespace RtfDomParser
                         name = name.Trim();
                         if (string.IsNullOrEmpty(name))
                         {
-                            name = System.Windows.Forms.Control.DefaultFont.Name;
+                            name = Defaults.FontName;
                         }
                         //System.Console.WriteLine( "Index:" + index + "  Name:" + name );
                         RTFFont font = new RTFFont(index, name);
