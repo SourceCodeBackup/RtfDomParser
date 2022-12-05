@@ -10,6 +10,7 @@
 
 
 using System;
+using System.Text;
 
 namespace RtfDomParser
 {
@@ -48,6 +49,7 @@ namespace RtfDomParser
 			System.Windows.Forms.Clipboard.SetDataObject( data , true );
 			System.Windows.Forms.MessageBox.Show("OK, you can paste words in MS Word.");
 		}
+        static RTFWriter() => Defaults.LoadEncodings();
 
 		/// <summary>
 		/// Test to generate a little rtf document

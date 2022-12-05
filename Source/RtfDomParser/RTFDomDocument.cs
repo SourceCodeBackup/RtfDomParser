@@ -25,6 +25,8 @@ namespace RtfDomParser
     /// </remarks>
     public partial class RTFDomDocument : RTFDomElement
     {
+        static RTFDomDocument() => Defaults.LoadEncodings();
+
         /// <summary>
         /// initialize instance
         /// </summary>
