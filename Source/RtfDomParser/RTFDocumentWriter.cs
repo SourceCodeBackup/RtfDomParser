@@ -255,7 +255,7 @@ namespace RtfDomParser
 				myInfo.Clear();
 				myFontTable.Clear();
 				myColorTable.Clear();
-				myFontTable.Add( System.Windows.Forms.Control.DefaultFont.Name );
+				myFontTable.Add( Defaults.FontName );
 			}
 			else
 			{

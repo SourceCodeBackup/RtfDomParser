@@ -12,6 +12,8 @@ namespace RtfDomParser.Test
         [STAThread]
         static void Main()
         {
+            Defaults.FontName = System.Windows.Forms.Control.DefaultFont.Name;
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new frmRTFTest());

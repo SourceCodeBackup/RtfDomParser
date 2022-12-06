@@ -1,144 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D35F9B37-CF93-48AE-9A1A-3A99930F04FB}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DCSoft.RTF</RootNamespace>
-    <AssemblyName>DCSoft.RTF</AssemblyName>
-    <SccProjectName>Svn</SccProjectName>
-    <SccLocalPath>Svn</SccLocalPath>
-    <SccAuxPath>Svn</SccAuxPath>
-    <SccProvider>SubversionScc</SccProvider>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>yyf.snk</AssemblyOriginatorKeyFile>
-    <StartupObject>
-    </StartupObject>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <OldToolsVersion>2.0</OldToolsVersion>
-    <UpgradeBackupLocation />
-    <PublishUrl>http://localhost/XDesigner.RTF/</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Web</InstallFrom>
-    <UpdateEnabled>true</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>true</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFramework>net6.0</TargetFramework>
+
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="System.Drawing.Common" Version="5.0.3" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ByteBuffer.cs" />
-    <Compile Include="DocumentFormatInfo.cs" />
-    <Compile Include="LevelNumberType.cs" />
-    <Compile Include="RTFBorderStyle.cs" />
-    <Compile Include="RTFDomHeader.cs" />
-    <Compile Include="RTFDomObject.cs" />
-    <Compile Include="RTFDomPageBreak.cs" />
-    <Compile Include="RTFDomTempContainer.cs" />
-    <Compile Include="RTFInstanceDebugView.cs" />
-    <Compile Include="ProgressEventHandler.cs" />
-    <Compile Include="RTFDomBookmark.cs" />
-    <Compile Include="RTFDomElementList.cs" />
-    <Compile Include="RTFDomField.cs" />
-    <Compile Include="RTFDomImage.cs" />
-    <Compile Include="RTFDomLineBreak.cs" />
-    <Compile Include="RTFDomParagraph.cs" />
-    <Compile Include="RTFDomShape.cs" />
-    <Compile Include="RTFDomShapeGroup.cs" />
-    <Compile Include="RTFDomTable.cs" />
-    <Compile Include="RTFDomTableCell.cs" />
-    <Compile Include="RTFDomTableColumn.cs" />
-    <Compile Include="RTFDomTableRow.cs" />
-    <Compile Include="RTFDomText.cs" />
-    <Compile Include="RTFDomElementContainer.cs" />
-    <Compile Include="RTFListOverrideTable.cs" />
-    <Compile Include="RTFListTable.cs" />
-    <Compile Include="RTFRawLayerInfo.cs" />
-    <Compile Include="StringAttribute.cs" />
-    <Compile Include="Parser.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <None Include="yyf.snk" />
-    <Compile Include="RTFAlignment.cs" />
-    <Compile Include="RTFAttribute.cs" />
-    <Compile Include="RTFColorTable.cs" />
-    <Compile Include="RTFConsts.cs" />
-    <Compile Include="RTFDocumentInfo.cs" />
-    <Compile Include="RTFDocumentWriter.cs" />
-    <Compile Include="RTFDomDocument.cs" />
-    <Compile Include="RTFDomElement.cs" />
-    <Compile Include="RTFFontTable.cs" />
-    <Compile Include="RTFNode.cs" />
-    <Compile Include="RTFNodeGroup.cs" />
-    <Compile Include="RTFNodeList.cs" />
-    <Compile Include="RTFNodeType.cs" />
-    <Compile Include="RTFRawDocument.cs" />
-    <Compile Include="RTFUtil.cs" />
-    <Compile Include="RTFVerticalAlignment.cs" />
-    <Compile Include="RTFWriter.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 3.1</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>
